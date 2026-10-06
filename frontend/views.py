@@ -10,3 +10,24 @@ from django.contrib import messages
 # ── INDEX ─────────────────────────────────────────────────────
 def index(request):
     return render(request, 'frontend/index.html')
+
+
+# ── ABOUT ─────────────────────────────────────────────────────
+def about(request):
+    return render(request, 'frontend/about.html')
+
+# ── CONTACT ─────────────────────────────────────────────────────
+def contact(request):
+    return render(request, 'frontend/contact.html')
+
+# ── LOGIN ─────────────────────────────────────────────────────
+def login_view(request):
+    return render(request, 'frontend/login.html')
+
+# ── DEVELOPERS ─────────────────────────────────────────────────────
+def developers(request):
+    return render(request, 'frontend/api-docs.html')
+
+# ── REGISTER ───────────────────────────────────────────────────── 
+def register(request):
+    return render(request, 'frontend/register.html')

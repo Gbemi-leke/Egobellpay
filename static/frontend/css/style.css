@@ -393,7 +393,7 @@ html:not(.js) .bar span { transform: none; }
 
 /* ---------- 17. Back to top ---------- */
 .to-top {
-  position: fixed; right: 24px; bottom: 24px; z-index: 1000; width: 52px; height: 52px; border: 0; border-radius: 50%;
+  position: fixed; right: 26px; bottom: 96px; z-index: 1000; width: 52px; height: 52px; border: 0; border-radius: 50%;
   background: var(--ink); color: #fff; display: flex; align-items: center; justify-content: center;
   opacity: 0; visibility: hidden; transform: translateY(16px) rotate(-90deg);
   transition: opacity .3s, transform .5s var(--ease), visibility 0s .3s;
@@ -430,3 +430,23 @@ html:not(.js) .bar span { transform: none; }
   .bar span, .steps::before, .safety-list li::before { transform: none !important; }
   .js .phone__tx--new { max-height: none; opacity: 1; margin-top: 0; transform: none; }
 }
+
+
+/* WhatsApp chat button (sits below the back-to-top button) */
+.wa-chat {
+  position: fixed; right: 24px; bottom: 24px; z-index: 1000; width: 56px; height: 56px; border-radius: 50%;
+  background: #25D366; color: var(--ink); display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 14px 30px -12px rgba(14, 31, 24, .55); transition: transform .3s var(--ease);
+}
+.wa-chat:hover, .wa-chat:focus-visible { color: var(--ink); transform: scale(1.08); }
+.wa-chat svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.wa-chat::before { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid #25D366; animation: waPulse 2.4s ease-out infinite; }
+.wa-chat__tip {
+  position: absolute; right: 68px; top: 50%; white-space: nowrap; padding: 10px 14px; border-radius: 12px;
+  background: #fff; color: var(--ink); font-size: .875rem; font-weight: 600; box-shadow: 0 14px 30px -14px rgba(14, 31, 24, .5);
+  opacity: 0; transform: translate(8px, -50%); pointer-events: none; transition: opacity .25s, transform .3s var(--ease);
+}
+.wa-chat:hover .wa-chat__tip, .wa-chat:focus-visible .wa-chat__tip { opacity: 1; transform: translate(0, -50%); }
+@media (hover: none) { .wa-chat__tip { display: none; } }
+
+@keyframes waPulse { 0% { transform: scale(1); opacity: .8; } 100% { transform: scale(1.7); opacity: 0; } }
