@@ -15,8 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
+admin.site.site_header  = "EgobellPay — Admin Panel"
+admin.site.site_title   = "EgobellPay Admin"
+admin.site.index_title  = "EgobellPay Dashboard"
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-]
+    path('django-admin/', admin.site.urls),
+    path('', include('frontend.urls')),
+    # path('', include('backend.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
