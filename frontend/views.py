@@ -31,3 +31,7 @@ def developers(request):
 # ── REGISTER ───────────────────────────────────────────────────── 
 def register(request):
     return render(request, 'frontend/register.html')
+
+# ── FORGOT PASSWORD ─────────────────────────────────────────────────────
+def forgot_password(request):
+    return render(request, 'frontend/forgot-password.html')
