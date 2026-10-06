@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Open an account | EgoBellPay</title>
+  <meta name="description" content="Open a personal or business EgoBellPay account. You will need your BVN, NIN and, for a business, your CAC documents.">
+  <meta name="theme-color" content="#0E1F18">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/pages.css" rel="stylesheet">
+
+  <script>document.documentElement.className += ' js';</script>
+</head>
+<body>
+  <!-- SVG icon sprite -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15L6 17z"/><path d="M10 21.5h4"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-5 4v-4H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
+  </svg>
+
+
+  <main class="auth">
+    <aside class="auth__aside">
+      <div class="orbit orbit--1" aria-hidden="true"><span class="orbit__dot"></span></div>
+      <div class="orbit orbit--2" aria-hidden="true"><span class="orbit__dot"></span></div>
+      <a class="brand" href="index.html">
+        <span class="brand__mark"><svg class="icon"><use href="#i-bell"/></svg></span>
+        <span class="brand__name">EgoBellPay</span>
+      </a>
+      <div class="auth__pitch">
+        <h2 class="auth__title">Open your account in five minutes.</h2>
+        <p class="auth__text">Have these ready before you start.</p>
+          <ul class="auth__list">
+            <li><svg class="icon"><use href="#i-check"/></svg><span>Your BVN and NIN</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg><span>A valid ID and a clear selfie</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg><span>For a business: CAC certificate and RC or BN number</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg><span>For a business: proof of the business address</span></li>
+          </ul>
+      </div>
+      <p class="auth__foot">Your money is held with Bell MFB, a licensed microfinance bank regulated by the CBN.</p>
+    </aside>
+
+    <div class="auth__main">
+      <div class="auth__card auth__card--wide">
+        <div>
+          <h1 class="auth__heading">Create your account</h1>
+          <p class="auth__sub">Already have one? <a class="text-link" href="login.html">Sign in</a></p>
+        </div>
+
+        <div class="wizard__progress">
+          <div class="wizard__meta"><span id="wizardCount">Step 1 of 5</span><strong id="wizardLabel">Account type</strong></div>
+          <div class="wizard__bar" aria-hidden="true"><span id="wizardBar"></span></div>
+        </div>
+
+        <!-- Steps: type > details > identity > business (business accounts only) > security > review.
+             Connect the submit in assets/js/pages.js (send). -->
+        <form id="registerForm" novalidate>
+
+          <!-- STEP: account type -->
+          <div class="wizard__step" data-step="type">
+            <h2>Which account do you need?</h2>
+            <div class="row g-3" role="radiogroup" aria-label="Account type">
+              <div class="col-md-6">
+                <label class="choice">
+                  <input type="radio" name="account_type" value="personal">
+                  <span class="choice__card">
+                    <span class="choice__title">Personal<span class="choice__radio" aria-hidden="true"></span></span>
+                    <span class="choice__desc">For everyday banking: send, receive, pay bills and save.</span>
+                    <span class="choice__need">You will need your BVN, NIN, a valid ID and a selfie.</span>
+                  </span>
+                </label>
+              </div>
+              <div class="col-md-6">
+                <label class="choice">
+                  <input type="radio" name="account_type" value="business">
+                  <span class="choice__card">
+                    <span class="choice__title">Business<span class="choice__radio" aria-hidden="true"></span></span>
+                    <span class="choice__desc">For registered businesses: collect payments, take cards and pay staff.</span>
+                    <span class="choice__need">You will also need your CAC documents and proof of address.</span>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="invalid-feedback" id="typeError" role="alert"></div>
+              <div class="wizard__nav">
+                <span></span>
+                <button type="button" class="btn btn-brand btn-lg btn-arrow" data-next>Continue<svg class="icon"><use href="#i-arrow"/></svg></button>
+              </div>
+          </div>
+
+          <!-- STEP: details -->
+          <div class="wizard__step" data-step="details">
+            <h2>Your details</h2>
+            <p><span class="only-personal">Use your name exactly as it appears on your BVN.</span><span class="only-business">Enter the details of the owner or director applying, exactly as they appear on their BVN.</span></p>
+            <div class="row g-3">
+              <div class="col-sm-6">
+              <div class="field">
+                <label for="firstName">First name</label>
+                <input class="form-control" type="text" id="firstName" name="first_name" required data-review="First name" autocomplete="given-name">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              </div>
+              <div class="col-sm-6">
+              <div class="field">
+                <label for="lastName">Last name</label>
+                <input class="form-control" type="text" id="lastName" name="last_name" required data-review="Last name" autocomplete="family-name">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              </div>
+            </div>
+              <div class="field">
+                <label for="email">Email address</label>
+                <input class="form-control" type="email" id="email" name="email" required data-review="Email" autocomplete="email" data-rule="email">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+              <div class="field">
+                <label for="phone">Phone number</label>
+                <input class="form-control" type="tel" id="phone" name="phone" required data-review="Phone" autocomplete="tel" inputmode="tel" placeholder="0803 123 4567" data-rule="phone">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              </div>
+              <div class="col-sm-6">
+              <div class="field">
+                <label for="dob">Date of birth</label>
+                <input class="form-control" type="date" id="dob" name="date_of_birth" required data-review="Date of birth" autocomplete="bday" data-rule="adult">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              </div>
+            </div>
+
+            <div class="only-business">
+              <div class="d-flex flex-column gap-3">
+                <h2 class="mt-2">About the business</h2>
+              <div class="field">
+                <label for="bizName">Registered business name</label>
+                <input class="form-control" type="text" id="bizName" name="business_name" required data-review="Business name" autocomplete="organization">
+                <div class="invalid-feedback" role="alert"></div>
+                <span class="field__hint">As written on your CAC certificate.</span>
+              </div>
+                <div class="row g-3">
+                  <div class="col-sm-6">
+              <div class="field">
+                <label for="bizType">Type of business</label>
+                <select class="form-select" id="bizType" name="business_type" required data-review="Business type">
+                  <option value="">Choose one</option>
+                  <option value="business_name">Business name (sole proprietor or partnership)</option>
+                  <option value="limited">Limited liability company</option>
+                  <option value="trustees">Incorporated trustees (NGO, church, association)</option>
+                </select>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+                  </div>
+                  <div class="col-sm-6">
+              <div class="field">
+                <label for="rcNumber">RC or BN number</label>
+                <input class="form-control" type="text" id="rcNumber" name="rc_number" required data-review="RC or BN number" placeholder="RC 1234567" data-rule="rc">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+                  </div>
+                </div>
+              <div class="field">
+                <label for="bizAddress">Business address</label>
+                <input class="form-control" type="text" id="bizAddress" name="business_address" required data-review="Business address" autocomplete="street-address">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="bizRole">Your role in the business</label>
+                <select class="form-select" id="bizRole" name="applicant_role" required data-review="Your role">
+                  <option value="">Choose one</option>
+                  <option value="owner">Owner</option>
+                  <option value="director">Director</option>
+                  <option value="signatory">Authorised signatory</option>
+                </select>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              </div>
+            </div>
+
+              <div class="field">
+                <label for="password">Create a password</label>
+                <div class="pw">
+                  <input class="form-control" type="password" id="password" name="password" required autocomplete="new-password" data-rule="password">
+                  <button type="button" class="pw__toggle" aria-pressed="false" aria-label="Show or hide password">Show</button>
+                </div>
+                <div class="invalid-feedback" role="alert"></div>
+                <span class="field__hint">At least 8 characters, with a letter and a number.</span>
+              </div>
+              <div class="field">
+                <label for="passwordConfirm">Confirm your password</label>
+                <div class="pw">
+                  <input class="form-control" type="password" id="passwordConfirm" name="password_confirmation" required autocomplete="new-password" data-match="#password">
+                  <button type="button" class="pw__toggle" aria-pressed="false" aria-label="Show or hide password">Show</button>
+                </div>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="referral">Referral code <span class="optional">(optional)</span></label>
+                <input class="form-control" type="text" id="referral" name="referral_code" autocomplete="off">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="wizard__nav">
+                <button type="button" class="btn btn-ghost btn-lg" data-back><svg class="icon"><use href="#i-back"/></svg>Back</button>
+                <button type="button" class="btn btn-brand btn-lg btn-arrow" data-next>Continue<svg class="icon"><use href="#i-arrow"/></svg></button>
+              </div>
+          </div>
+
+          <!-- STEP: identity -->
+          <div class="wizard__step" data-step="identity">
+            <h2>Confirm your identity</h2>
+            <p><span class="only-personal">CBN rules require us to confirm who you are before we open an account.</span><span class="only-business">These belong to the owner or director applying. CBN rules require us to confirm who runs the business.</span></p>
+              <div class="field">
+                <label for="bvn">Bank Verification Number (BVN)</label>
+                <input class="form-control mono" type="text" id="bvn" name="bvn" required data-review="BVN" inputmode="numeric" autocomplete="off" data-digits="11" data-rule="bvn" data-mask="true">
+                <div class="invalid-feedback" role="alert"></div>
+                <span class="field__hint">Dial *565*0# on the phone number linked to your bank to see your BVN.</span>
+              </div>
+              <div class="field">
+                <label for="nin">National Identification Number (NIN)</label>
+                <input class="form-control mono" type="text" id="nin" name="nin" required data-review="NIN" inputmode="numeric" autocomplete="off" data-digits="11" data-rule="nin" data-mask="true">
+                <div class="invalid-feedback" role="alert"></div>
+                <span class="field__hint">Dial *346# to see your NIN.</span>
+              </div>
+              <div class="field">
+                <label for="idType">ID document</label>
+                <select class="form-select" id="idType" name="id_type" required data-review="ID document">
+                  <option value="">Choose one</option>
+                  <option value="nin_slip">National ID card or NIN slip</option>
+                  <option value="passport">International passport</option>
+                  <option value="drivers_licence">Driver's licence</option>
+                  <option value="voters_card">Voter's card</option>
+                </select>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <span class="field__label" id="idDocumentLabel">Upload your ID</span>
+                <label class="upload" data-review="ID upload">
+                  <input type="file" id="idDocument" name="id_document" accept=".pdf,.jpg,.jpeg,.png" aria-labelledby="idDocumentLabel" required>
+                  <span class="upload__icon"><svg class="icon"><use href="#i-upload"/></svg></span>
+                  <span class="upload__text"><span class="upload__title">Choose a file or drop it here</span><span class="upload__meta">PDF, JPG or PNG, up to 5 MB</span></span>
+                  <button type="button" class="upload__clear">Remove</button>
+                </label>
+                <div class="invalid-feedback" role="alert"></div>
+                <span class="field__hint">The whole document must be visible and readable.</span>
+              </div>
+              <div class="field">
+                <span class="field__label" id="selfieLabel">A selfie</span>
+                <label class="upload" data-review="Selfie">
+                  <input type="file" id="selfie" name="selfie" accept=".jpg,.jpeg,.png" aria-labelledby="selfieLabel" required capture="user">
+                  <span class="upload__icon"><svg class="icon"><use href="#i-upload"/></svg></span>
+                  <span class="upload__text"><span class="upload__title">Choose a file or drop it here</span><span class="upload__meta">PDF, JPG or PNG, up to 5 MB</span></span>
+                  <button type="button" class="upload__clear">Remove</button>
+                </label>
+                <div class="invalid-feedback" role="alert"></div>
+                <span class="field__hint">Face the camera in good light, with no hat or sunglasses.</span>
+              </div>
+              <p class="note"><svg class="icon"><use href="#i-lock"/></svg><span>Your BVN only confirms your identity. It does not give us access to your bank accounts.</span></p>
+              <div class="wizard__nav">
+                <button type="button" class="btn btn-ghost btn-lg" data-back><svg class="icon"><use href="#i-back"/></svg>Back</button>
+                <button type="button" class="btn btn-brand btn-lg btn-arrow" data-next>Continue<svg class="icon"><use href="#i-arrow"/></svg></button>
+              </div>
+          </div>
+
+          <!-- STEP: business documents (business accounts only) -->
+          <div class="wizard__step" data-step="business" data-only="business">
+            <h2>Business documents</h2>
+            <p>Upload clear scans or photos of each document.</p>
+              <div class="field">
+                <span class="field__label" id="cacCertLabel">CAC certificate</span>
+                <label class="upload" data-review="CAC certificate">
+                  <input type="file" id="cacCert" name="cac_certificate" accept=".pdf,.jpg,.jpeg,.png" aria-labelledby="cacCertLabel" required>
+                  <span class="upload__icon"><svg class="icon"><use href="#i-upload"/></svg></span>
+                  <span class="upload__text"><span class="upload__title">Choose a file or drop it here</span><span class="upload__meta">PDF, JPG or PNG, up to 5 MB</span></span>
+                  <button type="button" class="upload__clear">Remove</button>
+                </label>
+                <div class="invalid-feedback" role="alert"></div>
+                <span class="field__hint">Certificate of incorporation, or certificate of registration for a business name.</span>
+              </div>
+              <div class="field">
+                <span class="field__label" id="cacStatusLabel">CAC status report</span>
+                <label class="upload" data-review="CAC status report">
+                  <input type="file" id="cacStatus" name="cac_status_report" accept=".pdf,.jpg,.jpeg,.png" aria-labelledby="cacStatusLabel" required>
+                  <span class="upload__icon"><svg class="icon"><use href="#i-upload"/></svg></span>
+                  <span class="upload__text"><span class="upload__title">Choose a file or drop it here</span><span class="upload__meta">PDF, JPG or PNG, up to 5 MB</span></span>
+                  <button type="button" class="upload__clear">Remove</button>
+                </label>
+                <div class="invalid-feedback" role="alert"></div>
+                <span class="field__hint">The status report or Form CAC 1.1 that lists the directors or proprietors.</span>
+              </div>
+              <div class="field">
+                <span class="field__label" id="memartLabel">Memorandum and Articles of Association <span class="optional">(optional)</span></span>
+                <label class="upload" data-review="Memorandum and Articles">
+                  <input type="file" id="memart" name="memart" accept=".pdf,.jpg,.jpeg,.png" aria-labelledby="memartLabel">
+                  <span class="upload__icon"><svg class="icon"><use href="#i-upload"/></svg></span>
+                  <span class="upload__text"><span class="upload__title">Choose a file or drop it here</span><span class="upload__meta">PDF, JPG or PNG, up to 5 MB</span></span>
+                  <button type="button" class="upload__clear">Remove</button>
+                </label>
+                <div class="invalid-feedback" role="alert"></div>
+                <span class="field__hint">Limited companies only.</span>
+              </div>
+              <div class="field">
+                <span class="field__label" id="addressProofLabel">Proof of business address</span>
+                <label class="upload" data-review="Proof of address">
+                  <input type="file" id="addressProof" name="proof_of_address" accept=".pdf,.jpg,.jpeg,.png" aria-labelledby="addressProofLabel" required>
+                  <span class="upload__icon"><svg class="icon"><use href="#i-upload"/></svg></span>
+                  <span class="upload__text"><span class="upload__title">Choose a file or drop it here</span><span class="upload__meta">PDF, JPG or PNG, up to 5 MB</span></span>
+                  <button type="button" class="upload__clear">Remove</button>
+                </label>
+                <div class="invalid-feedback" role="alert"></div>
+                <span class="field__hint">A utility bill or tenancy agreement from the last 3 months.</span>
+              </div>
+              <div class="field">
+                <label for="tin">Tax Identification Number (TIN) <span class="optional">(optional)</span></label>
+                <input class="form-control mono" type="text" id="tin" name="tin" data-review="TIN" autocomplete="off">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <p class="note"><svg class="icon"><use href="#i-info"/></svg><span>We check your RC or BN number against the CAC register, so the name on your documents must match the business name you entered.</span></p>
+              <div class="wizard__nav">
+                <button type="button" class="btn btn-ghost btn-lg" data-back><svg class="icon"><use href="#i-back"/></svg>Back</button>
+                <button type="button" class="btn btn-brand btn-lg btn-arrow" data-next>Continue<svg class="icon"><use href="#i-arrow"/></svg></button>
+              </div>
+          </div>
+
+          <!-- STEP: security -->
+          <div class="wizard__step" data-step="security">
+            <h2>Set your transaction PIN</h2>
+            <p>You will enter this 4-digit PIN to approve every transfer and payment.</p>
+              <div class="field">
+                <span class="field__label">Choose a PIN</span>
+                <div class="pin" id="pinNew">
+                  <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Choose a PIN, digit 1">
+                  <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Choose a PIN, digit 2">
+                  <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Choose a PIN, digit 3">
+                  <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Choose a PIN, digit 4">
+                </div>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <span class="field__label">Confirm your PIN</span>
+                <div class="pin" id="pinConfirm" data-match="#pinNew">
+                  <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Confirm your PIN, digit 1">
+                  <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Confirm your PIN, digit 2">
+                  <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Confirm your PIN, digit 3">
+                  <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Confirm your PIN, digit 4">
+                </div>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <p class="note"><svg class="icon"><use href="#i-lock"/></svg><span>Never share your PIN. We will never ask for it by phone, SMS or email.</span></p>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="terms" name="terms" required data-msg="You need to accept the terms to open an account.">
+                <label class="form-check-label" for="terms">I agree to the <a class="text-link" href="terms.html" target="_blank" rel="noopener">Terms of service</a> and <a class="text-link" href="privacy.html" target="_blank" rel="noopener">Privacy policy</a>.</label>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="wizard__nav">
+                <button type="button" class="btn btn-ghost btn-lg" data-back><svg class="icon"><use href="#i-back"/></svg>Back</button>
+                <button type="button" class="btn btn-brand btn-lg btn-arrow" data-next>Continue<svg class="icon"><use href="#i-arrow"/></svg></button>
+              </div>
+          </div>
+
+          <!-- STEP: review -->
+          <div class="wizard__step" data-step="review">
+            <h2>Check your details</h2>
+            <p>Make sure everything is correct. You cannot change your BVN or NIN after you submit.</p>
+            <dl class="review" id="reviewList"></dl>
+            <p><button type="button" class="btn btn-ghost" data-goto="details">Edit my details</button></p>
+            <div class="form-status" role="status" aria-live="polite"></div>
+              <div class="wizard__nav">
+                <button type="button" class="btn btn-ghost btn-lg" data-back><svg class="icon"><use href="#i-back"/></svg>Back</button>
+                <button type="submit" class="btn btn-brand btn-lg"><span class="spinner" aria-hidden="true"></span>Submit application</button>
+              </div>
+          </div>
+        </form>
+
+        <!-- Shown after a successful submit -->
+        <div class="done" id="registerDone" role="status" aria-live="polite">
+          <span class="done__tick"><svg class="icon"><use href="#i-check"/></svg></span>
+          <h2 class="auth__heading">Application received</h2>
+          <p class="auth__sub">We are checking your details now. We will email <strong id="doneEmail"></strong> when your account is ready.</p>
+          <div class="d-flex flex-wrap gap-3">
+            <a class="btn btn-brand btn-lg" href="login.html">Go to sign in</a>
+            <a class="btn btn-ghost btn-lg" href="index.html">Back to home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/pages.js"></script>
+</body>
+</html>

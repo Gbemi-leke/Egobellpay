@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API documentation | EgoBellPay</title>
+  <meta name="description" content="Send transfers, create virtual accounts and receive webhooks with the EgoBellPay API.">
+  <meta name="theme-color" content="#0E1F18">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/pages.css" rel="stylesheet">
+
+  <script>document.documentElement.className += ' js';</script>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#docsNav" data-bs-root-margin="0px 0px -55%" data-bs-smooth-scroll="true" tabindex="0">
+  <!-- SVG icon sprite -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15L6 17z"/><path d="M10 21.5h4"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-5 4v-4H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
+  </svg>
+
+
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+  <nav class="navbar navbar-expand-lg site-nav fixed-top" id="mainNav" aria-label="Main" data-bs-theme="dark">
+    <div class="container">
+      <a class="navbar-brand brand" href="index.html">
+        <span class="brand__mark"><svg class="icon"><use href="#i-bell"/></svg></span>
+        <span class="brand__name">EgoBellPay</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html#products">Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#business">Business</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link active" href="api-docs.html" aria-current="page">Developers</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+        <div class="d-flex flex-wrap align-items-center gap-3">
+          <a class="nav-login" href="login.html">Sign in</a>
+          <a class="btn btn-mint" href="register.html">Open an account</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <section class="page-hero">
+      <svg class="page-hero__ring" viewBox="0 0 600 600" aria-hidden="true"><circle cx="300" cy="300" r="290"/><circle cx="300" cy="300" r="210"/><circle class="dot" cx="300" cy="10" r="9"/></svg>
+      <div class="container">
+        <h1 class="page-hero__title">API documentation</h1>
+        <p class="page-hero__lead">Send transfers, issue virtual accounts and get told the moment money moves.</p>
+      </div>
+    </section>
+
+    <div class="docs">
+      <div class="container">
+        <div class="row gx-lg-5">
+          <div class="col-lg-3">
+            <nav class="docs__nav" id="docsNav" aria-label="Documentation">
+              <h2>Getting started</h2>
+              <a href="#intro">Introduction</a>
+              <a href="#auth">Authentication</a>
+              <a href="#errors">Errors</a>
+              <a href="#idempotency">Idempotency</a>
+              <h2>Transfers</h2>
+              <a href="#banks">List banks</a>
+              <a href="#resolve">Confirm an account name</a>
+              <a href="#transfer">Send a transfer</a>
+              <a href="#transfer-status">Check a transfer</a>
+              <h2>Collections</h2>
+              <a href="#virtual-accounts">Virtual accounts</a>
+              <a href="#balance">Balance</a>
+              <h2>Webhooks</h2>
+              <a href="#events">Events</a>
+              <a href="#signatures">Verify signatures</a>
+            </nav>
+          </div>
+
+          <div class="col-lg-9 docs__body">
+            <p class="docs__draft"><svg class="icon" style="flex:none;margin-top:3px"><use href="#i-info"/></svg><span><strong>Draft for v2.</strong> These endpoints describe the planned API. Paths, fields and the base URL may change until the backend ships.</span></p>
+
+            <section id="intro">
+              <h2>Introduction</h2>
+              <p>The EgoBellPay API is a REST API. You send JSON over HTTPS and get JSON back. Every response has a <code>status</code> field that is <code>true</code> when the request worked.</p>
+              <div class="endpoint"><span class="method">Base URL</span><span>https://api.egobellpay.ng/v1</span></div>
+              <ul class="bullets">
+                <li>All amounts are whole numbers in <strong>kobo</strong>. ₦15,000.00 is <code>1500000</code>.</li>
+                <li>Times are in UTC, in ISO 8601 format.</li>
+                <li>Use your test key while you build. Test transfers never move real money.</li>
+              </ul>
+            </section>
+
+            <section id="auth">
+              <h2>Authentication</h2>
+              <p>Send your secret key in the <code>Authorization</code> header of every request. Keys starting with <code>sk_test_</code> work in test mode, and keys starting with <code>sk_live_</code> move real money.</p>
+              <p>Keep secret keys on your server. Never put one in a mobile app, a web page or a public repository.</p>
+              <div class="codebox">
+              <div class="codebox__bar"><div class="codebox__tabs" role="tablist" aria-label="Language"><button type="button" class="codebox__tab is-active" role="tab" aria-selected="true" data-lang="curl">cURL</button><button type="button" class="codebox__tab" role="tab" aria-selected="false" data-lang="node">Node.js</button><button type="button" class="codebox__tab" role="tab" aria-selected="false" data-lang="python">Python</button><button type="button" class="codebox__tab" role="tab" aria-selected="false" data-lang="php">PHP</button></div><button type="button" class="codebox__copy">Copy</button></div>
+<pre class="is-active" data-lang="curl" tabindex="0">curl https://api.egobellpay.ng/v1/balance \
+  -H &quot;Authorization: Bearer sk_test_your_secret_key&quot;</pre>
+<pre data-lang="node" tabindex="0">const res = await fetch(&#x27;https://api.egobellpay.ng/v1/balance&#x27;, {
+  headers: { Authorization: `Bearer ${process.env.EGOBELLPAY_SECRET_KEY}` },
+});
+const balance = await res.json();</pre>
+<pre data-lang="python" tabindex="0">import os, requests
+
+res = requests.get(
+    &quot;https://api.egobellpay.ng/v1/balance&quot;,
+    headers={&quot;Authorization&quot;: f&quot;Bearer {os.environ[&#x27;EGOBELLPAY_SECRET_KEY&#x27;]}&quot;},
+    timeout=30,
+)
+balance = res.json()</pre>
+<pre data-lang="php" tabindex="0">$ch = curl_init(&#x27;https://api.egobellpay.ng/v1/balance&#x27;);
+curl_setopt_array($ch, [
+    CURLOPT_RETURNTRANSFER =&gt; true,
+    CURLOPT_HTTPHEADER =&gt; [&#x27;Authorization: Bearer &#x27; . getenv(&#x27;EGOBELLPAY_SECRET_KEY&#x27;)],
+]);
+$balance = json_decode(curl_exec($ch), true);</pre>
+            </div>
+              <div class="codebox">
+              <div class="codebox__bar"><span class="codebox__label">Response 200</span><button type="button" class="codebox__copy">Copy</button></div>
+<pre class="is-active" data-lang="json" tabindex="0">{
+  &quot;status&quot;: true,
+  &quot;data&quot;: {
+    &quot;currency&quot;: &quot;NGN&quot;,
+    &quot;available&quot;: 24850000,
+    &quot;ledger&quot;: 24850000
+  }
+}</pre>
+            </div>
+            </section>
+
+            <section id="errors">
+              <h2>Errors</h2>
+              <p>When a request fails, the HTTP status tells you the kind of problem and the body tells you which one. Show <code>message</code> to a person, and branch your code on <code>code</code>.</p>
+              <div class="codebox">
+              <div class="codebox__bar"><span class="codebox__label">Error response</span><button type="button" class="codebox__copy">Copy</button></div>
+<pre class="is-active" data-lang="json" tabindex="0">{
+  &quot;status&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;insufficient_funds&quot;,
+    &quot;message&quot;: &quot;Your balance is too low for this transfer.&quot;
+  }
+}</pre>
+            </div>
+              <div class="table-scroll"><table class="docs-table">
+              <thead><tr><th scope="col">Status</th><th scope="col">Code</th><th scope="col">What it means</th></tr></thead>
+              <tbody>
+                <tr><td>400</td><td><code>invalid_request</code></td><td>A field is missing or in the wrong format.</td></tr>
+                <tr><td>401</td><td><code>unauthorized</code></td><td>The key is missing, wrong or revoked.</td></tr>
+                <tr><td>403</td><td><code>forbidden</code></td><td>The key is valid but may not do this.</td></tr>
+                <tr><td>404</td><td><code>not_found</code></td><td>Nothing exists with that reference.</td></tr>
+                <tr><td>409</td><td><code>duplicate_reference</code></td><td>You already used that reference or idempotency key with different details.</td></tr>
+                <tr><td>422</td><td><code>insufficient_funds</code></td><td>Your balance is too low for the amount plus the fee.</td></tr>
+                <tr><td>429</td><td><code>rate_limited</code></td><td>Too many requests. Wait and retry.</td></tr>
+                <tr><td>500</td><td><code>server_error</code></td><td>Something failed on our side. Retry with the same idempotency key.</td></tr>
+              </tbody>
+            </table></div>
+            </section>
+
+            <section id="idempotency">
+              <h2>Idempotency</h2>
+              <p>Networks fail. If you send a transfer and never hear back, you need to retry without paying twice. Send an <code>Idempotency-Key</code> header with a unique value, such as a UUID, on every <code>POST</code>.</p>
+              <ul class="bullets">
+                <li>The same key with the same body returns the original response and does nothing new.</li>
+                <li>The same key with a different body returns <code>409 duplicate_reference</code>.</li>
+              </ul>
+            </section>
+
+            <section id="banks">
+              <h2>List banks</h2>
+              <p>Get the banks you can send to, with the code each one uses.</p>
+              <div class="endpoint"><span class="method method--get">GET</span><span>/banks</span></div>
+              <div class="codebox">
+              <div class="codebox__bar"><span class="codebox__label">Response 200</span><button type="button" class="codebox__copy">Copy</button></div>
+<pre class="is-active" data-lang="json" tabindex="0">{
+  &quot;status&quot;: true,
+  &quot;data&quot;: [
+    { &quot;name&quot;: &quot;Guaranty Trust Bank&quot;, &quot;code&quot;: &quot;058&quot; },
+    { &quot;name&quot;: &quot;Access Bank&quot;, &quot;code&quot;: &quot;044&quot; }
+  ]
+}</pre>
+            </div>
+            </section>
+
+            <section id="resolve">
+              <h2>Confirm an account name</h2>
+              <p>Always confirm who owns an account before you send money to it, and show the name to the person paying.</p>
+              <div class="endpoint"><span class="method">POST</span><span>/transfers/resolve</span></div>
+              <div class="codebox">
+              <div class="codebox__bar"><span class="codebox__label">Request</span><button type="button" class="codebox__copy">Copy</button></div>
+<pre class="is-active" data-lang="curl" tabindex="0">curl -X POST https://api.egobellpay.ng/v1/transfers/resolve \
+  -H &quot;Authorization: Bearer sk_test_your_secret_key&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d &#x27;{ &quot;bank_code&quot;: &quot;058&quot;, &quot;account_number&quot;: &quot;0123456789&quot; }&#x27;</pre>
+            </div>
+              <div class="codebox">
+              <div class="codebox__bar"><span class="codebox__label">Response 200</span><button type="button" class="codebox__copy">Copy</button></div>
+<pre class="is-active" data-lang="json" tabindex="0">{
+  &quot;status&quot;: true,
+  &quot;data&quot;: {
+    &quot;account_number&quot;: &quot;0123456789&quot;,
+    &quot;account_name&quot;: &quot;CHIDI OKAFOR&quot;,
+    &quot;bank_code&quot;: &quot;058&quot;
+  }
+}</pre>
+            </div>
+            </section>
+
+            <section id="transfer">
+              <h2>Send a transfer</h2>
+              <p>Send money from your balance to a Nigerian bank account. The response comes back as <code>pending</code>. The final result arrives by webhook, usually within seconds.</p>
+              <div class="endpoint"><span class="method">POST</span><span>/transfers</span></div>
+              <div class="table-scroll"><table class="docs-table">
+              <thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+              <tbody>
+                <tr><td><code>amount</code></td><td>integer</td><td>Amount in kobo. Required.</td></tr>
+                <tr><td><code>bank_code</code></td><td>string</td><td>From List banks. Required.</td></tr>
+                <tr><td><code>account_number</code></td><td>string</td><td>10 digits. Required.</td></tr>
+                <tr><td><code>account_name</code></td><td>string</td><td>The name returned when you confirmed the account. Required.</td></tr>
+                <tr><td><code>narration</code></td><td>string</td><td>Shown to the recipient. Optional.</td></tr>
+                <tr><td><code>reference</code></td><td>string</td><td>Your own unique reference. Required.</td></tr>
+              </tbody>
+            </table></div>
+              <div class="codebox">
+              <div class="codebox__bar"><div class="codebox__tabs" role="tablist" aria-label="Language"><button type="button" class="codebox__tab is-active" role="tab" aria-selected="true" data-lang="curl">cURL</button><button type="button" class="codebox__tab" role="tab" aria-selected="false" data-lang="node">Node.js</button><button type="button" class="codebox__tab" role="tab" aria-selected="false" data-lang="python">Python</button><button type="button" class="codebox__tab" role="tab" aria-selected="false" data-lang="php">PHP</button></div><button type="button" class="codebox__copy">Copy</button></div>
+<pre class="is-active" data-lang="curl" tabindex="0">curl -X POST https://api.egobellpay.ng/v1/transfers \
+  -H &quot;Authorization: Bearer sk_test_your_secret_key&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Idempotency-Key: 7d1f6c1e-2b0a-4c53-9a37-5b1c9f1e2041&quot; \
+  -d &#x27;{
+    &quot;amount&quot;: 1500000,
+    &quot;bank_code&quot;: &quot;058&quot;,
+    &quot;account_number&quot;: &quot;0123456789&quot;,
+    &quot;account_name&quot;: &quot;CHIDI OKAFOR&quot;,
+    &quot;narration&quot;: &quot;Rent balance&quot;,
+    &quot;reference&quot;: &quot;INV-2041&quot;
+  }&#x27;</pre>
+<pre data-lang="node" tabindex="0">import { randomUUID } from &#x27;node:crypto&#x27;;
+
+const res = await fetch(&#x27;https://api.egobellpay.ng/v1/transfers&#x27;, {
+  method: &#x27;POST&#x27;,
+  headers: {
+    Authorization: `Bearer ${process.env.EGOBELLPAY_SECRET_KEY}`,
+    &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+    &#x27;Idempotency-Key&#x27;: randomUUID(),
+  },
+  body: JSON.stringify({
+    amount: 1500000, // kobo
+    bank_code: &#x27;058&#x27;,
+    account_number: &#x27;0123456789&#x27;,
+    account_name: &#x27;CHIDI OKAFOR&#x27;,
+    narration: &#x27;Rent balance&#x27;,
+    reference: &#x27;INV-2041&#x27;,
+  }),
+});
+const transfer = await res.json();</pre>
+<pre data-lang="python" tabindex="0">import os, uuid, requests
+
+res = requests.post(
+    &quot;https://api.egobellpay.ng/v1/transfers&quot;,
+    headers={
+        &quot;Authorization&quot;: f&quot;Bearer {os.environ[&#x27;EGOBELLPAY_SECRET_KEY&#x27;]}&quot;,
+        &quot;Idempotency-Key&quot;: str(uuid.uuid4()),
+    },
+    json={
+        &quot;amount&quot;: 1500000,  # kobo
+        &quot;bank_code&quot;: &quot;058&quot;,
+        &quot;account_number&quot;: &quot;0123456789&quot;,
+        &quot;account_name&quot;: &quot;CHIDI OKAFOR&quot;,
+        &quot;narration&quot;: &quot;Rent balance&quot;,
+        &quot;reference&quot;: &quot;INV-2041&quot;,
+    },
+    timeout=30,
+)
+transfer = res.json()</pre>
+<pre data-lang="php" tabindex="0">$ch = curl_init(&#x27;https://api.egobellpay.ng/v1/transfers&#x27;);
+curl_setopt_array($ch, [
+    CURLOPT_RETURNTRANSFER =&gt; true,
+    CURLOPT_POST =&gt; true,
+    CURLOPT_HTTPHEADER =&gt; [
+        &#x27;Authorization: Bearer &#x27; . getenv(&#x27;EGOBELLPAY_SECRET_KEY&#x27;),
+        &#x27;Content-Type: application/json&#x27;,
+        &#x27;Idempotency-Key: &#x27; . bin2hex(random_bytes(16)),
+    ],
+    CURLOPT_POSTFIELDS =&gt; json_encode([
+        &#x27;amount&#x27; =&gt; 1500000, // kobo
+        &#x27;bank_code&#x27; =&gt; &#x27;058&#x27;,
+        &#x27;account_number&#x27; =&gt; &#x27;0123456789&#x27;,
+        &#x27;account_name&#x27; =&gt; &#x27;CHIDI OKAFOR&#x27;,
+        &#x27;narration&#x27; =&gt; &#x27;Rent balance&#x27;,
+        &#x27;reference&#x27; =&gt; &#x27;INV-2041&#x27;,
+    ]),
+]);
+$transfer = json_decode(curl_exec($ch), true);</pre>
+            </div>
+              <div class="codebox">
+              <div class="codebox__bar"><span class="codebox__label">Response 202</span><button type="button" class="codebox__copy">Copy</button></div>
+<pre class="is-active" data-lang="json" tabindex="0">{
+  &quot;status&quot;: true,
+  &quot;data&quot;: {
+    &quot;reference&quot;: &quot;INV-2041&quot;,
+    &quot;status&quot;: &quot;pending&quot;,
+    &quot;amount&quot;: 1500000,
+    &quot;fee&quot;: 5000,
+    &quot;currency&quot;: &quot;NGN&quot;,
+    &quot;created_at&quot;: &quot;2026-10-06T10:42:07Z&quot;
+  }
+}</pre>
+            </div>
+              <h3>Transfer statuses</h3>
+              <div class="table-scroll"><table class="docs-table">
+              <thead><tr><th scope="col">Status</th><th scope="col">What it means</th></tr></thead>
+              <tbody>
+                <tr><td><code>pending</code></td><td>We have debited your balance and sent the transfer to the bank.</td></tr>
+                <tr><td><code>successful</code></td><td>The receiving bank has confirmed it.</td></tr>
+                <tr><td><code>failed</code></td><td>The transfer did not go through and your balance was not debited.</td></tr>
+                <tr><td><code>reversed</code></td><td>The transfer failed after the debit, and the amount and fee were returned to your balance.</td></tr>
+              </tbody>
+            </table></div>
+            </section>
+
+            <section id="transfer-status">
+              <h2>Check a transfer</h2>
+              <p>Look up a transfer by the reference you sent. Use this if a webhook is late, not as a replacement for webhooks.</p>
+              <div class="endpoint"><span class="method method--get">GET</span><span>/transfers/{reference}</span></div>
+            </section>
+
+            <section id="virtual-accounts">
+              <h2>Virtual accounts</h2>
+              <p>Give a customer their own account number. When anyone pays into it from any bank, you get a <code>deposit.received</code> webhook.</p>
+              <div class="endpoint"><span class="method">POST</span><span>/virtual-accounts</span></div>
+              <div class="codebox">
+              <div class="codebox__bar"><span class="codebox__label">Request</span><button type="button" class="codebox__copy">Copy</button></div>
+<pre class="is-active" data-lang="curl" tabindex="0">curl -X POST https://api.egobellpay.ng/v1/virtual-accounts \
+  -H &quot;Authorization: Bearer sk_test_your_secret_key&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d &#x27;{
+    &quot;customer_name&quot;: &quot;Adaeze Nwosu&quot;,
+    &quot;customer_email&quot;: &quot;adaeze@example.com&quot;,
+    &quot;reference&quot;: &quot;CUS-1042&quot;
+  }&#x27;</pre>
+            </div>
+              <div class="codebox">
+              <div class="codebox__bar"><span class="codebox__label">Response 201</span><button type="button" class="codebox__copy">Copy</button></div>
+<pre class="is-active" data-lang="json" tabindex="0">{
+  &quot;status&quot;: true,
+  &quot;data&quot;: {
+    &quot;account_number&quot;: &quot;9012345678&quot;,
+    &quot;account_name&quot;: &quot;Adaeze Nwosu&quot;,
+    &quot;bank_name&quot;: &quot;Bell MFB&quot;,
+    &quot;reference&quot;: &quot;CUS-1042&quot;
+  }
+}</pre>
+            </div>
+            </section>
+
+            <section id="balance">
+              <h2>Balance</h2>
+              <p><code>available</code> is what you can spend now. <code>ledger</code> also includes money held for pending transfers.</p>
+              <div class="endpoint"><span class="method method--get">GET</span><span>/balance</span></div>
+            </section>
+
+            <section id="events">
+              <h2>Webhook events</h2>
+              <p>Add a webhook URL in your dashboard and we will <code>POST</code> an event to it whenever money moves. Reply with a <code>200</code> within a few seconds. If you do not, we retry.</p>
+              <div class="table-scroll"><table class="docs-table">
+              <thead><tr><th scope="col">Event</th><th scope="col">Sent when</th></tr></thead>
+              <tbody>
+                <tr><td><code>transfer.successful</code></td><td>A transfer you sent has been confirmed.</td></tr>
+                <tr><td><code>transfer.failed</code></td><td>A transfer could not be sent.</td></tr>
+                <tr><td><code>transfer.reversed</code></td><td>A transfer failed after the debit and the money was returned.</td></tr>
+                <tr><td><code>deposit.received</code></td><td>Money arrived in one of your virtual accounts.</td></tr>
+              </tbody>
+            </table></div>
+              <div class="codebox">
+              <div class="codebox__bar"><span class="codebox__label">Example event</span><button type="button" class="codebox__copy">Copy</button></div>
+<pre class="is-active" data-lang="json" tabindex="0">{
+  &quot;id&quot;: &quot;evt_01JABCD2041&quot;,
+  &quot;event&quot;: &quot;transfer.successful&quot;,
+  &quot;created_at&quot;: &quot;2026-10-06T10:42:19Z&quot;,
+  &quot;data&quot;: {
+    &quot;reference&quot;: &quot;INV-2041&quot;,
+    &quot;status&quot;: &quot;successful&quot;,
+    &quot;amount&quot;: 1500000,
+    &quot;fee&quot;: 5000,
+    &quot;currency&quot;: &quot;NGN&quot;
+  }
+}</pre>
+            </div>
+              <p>The same event can arrive more than once. Save each <code>id</code> and ignore any you have already handled.</p>
+            </section>
+
+            <section id="signatures">
+              <h2>Verify signatures</h2>
+              <p>Anyone can send a request to your webhook URL, so check every one. We sign the raw request body with your webhook secret using HMAC-SHA512 and put the result in the <code>X-EgoBellPay-Signature</code> header. Reject any request where your own calculation does not match.</p>
+              <div class="codebox">
+              <div class="codebox__bar"><div class="codebox__tabs" role="tablist" aria-label="Language"><button type="button" class="codebox__tab is-active" role="tab" aria-selected="true" data-lang="node">Node.js</button><button type="button" class="codebox__tab" role="tab" aria-selected="false" data-lang="python">Python</button><button type="button" class="codebox__tab" role="tab" aria-selected="false" data-lang="php">PHP</button></div><button type="button" class="codebox__copy">Copy</button></div>
+<pre class="is-active" data-lang="node" tabindex="0">import crypto from &#x27;node:crypto&#x27;;
+import express from &#x27;express&#x27;;
+
+const app = express();
+
+// Use the raw body: parsing and re-serialising changes the bytes
+app.post(&#x27;/webhooks/egobellpay&#x27;, express.raw({ type: &#x27;application/json&#x27; }), (req, res) =&gt; {
+  const expected = crypto
+    .createHmac(&#x27;sha512&#x27;, process.env.EGOBELLPAY_WEBHOOK_SECRET)
+    .update(req.body)
+    .digest(&#x27;hex&#x27;);
+  const received = req.get(&#x27;X-EgoBellPay-Signature&#x27;) || &#x27;&#x27;;
+
+  const valid = expected.length === received.length &amp;&amp;
+    crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(received));
+  if (!valid) return res.sendStatus(401);
+
+  const event = JSON.parse(req.body);
+  // Save event.id and skip it if you have seen it before
+  res.sendStatus(200);
+});</pre>
+<pre data-lang="python" tabindex="0">import hashlib, hmac, json, os
+
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+
+
+@csrf_exempt
+def egobellpay_webhook(request):
+    expected = hmac.new(
+        os.environ[&quot;EGOBELLPAY_WEBHOOK_SECRET&quot;].encode(),
+        request.body,  # raw bytes
+        hashlib.sha512,
+    ).hexdigest()
+    received = request.headers.get(&quot;X-EgoBellPay-Signature&quot;, &quot;&quot;)
+
+    if not hmac.compare_digest(expected, received):
+        return HttpResponse(status=401)
+
+    event = json.loads(request.body)
+    # Save event[&quot;id&quot;] and skip it if you have seen it before
+    return HttpResponse(status=200)</pre>
+<pre data-lang="php" tabindex="0">$payload = file_get_contents(&#x27;php://input&#x27;); // raw body
+$expected = hash_hmac(&#x27;sha512&#x27;, $payload, getenv(&#x27;EGOBELLPAY_WEBHOOK_SECRET&#x27;));
+$received = $_SERVER[&#x27;HTTP_X_EGOBELLPAY_SIGNATURE&#x27;] ?? &#x27;&#x27;;
+
+if (!hash_equals($expected, $received)) {
+    http_response_code(401);
+    exit;
+}
+
+$event = json_decode($payload, true);
+// Save $event[&#x27;id&#x27;] and skip it if you have seen it before
+http_response_code(200);</pre>
+            </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row gy-5 gx-lg-5 justify-content-between">
+        <div class="col-lg-5">
+          <a class="brand" href="index.html">
+            <span class="brand__mark"><svg class="icon"><use href="#i-bell"/></svg></span>
+            <span class="brand__name">EgoBellPay</span>
+          </a>
+          <p class="footer__about"><a href="mailto:hello@egobellpay.ng">hello@egobellpay.ng</a><br><a href="https://wa.me/2348140000105">08140000105</a></p>
+          <p class="footer__legal">Egobell Digital System, RC 9516674</p>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h3 class="footer__head">Products</h3>
+          <ul class="footer__links">
+            <li><a href="register.html">Personal account</a></li>
+            <li><a href="register.html?type=business">Business account</a></li>
+            <li><a href="index.html#business">POS terminals</a></li>
+            <li><a href="index.html#products">Virtual cards</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h3 class="footer__head">Company</h3>
+          <ul class="footer__links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="api-docs.html">API docs</a></li>
+            <li><a href="privacy.html">Privacy policy</a></li>
+            <li><a href="terms.html">Terms of service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">© <span id="year">2026</span> EgoBellPay. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Back to top, with a ring that fills as you scroll -->
+  <button type="button" class="to-top" id="toTop" aria-label="Back to top">
+    <svg class="to-top__ring" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="22"/><circle class="to-top__progress" cx="26" cy="26" r="22"/></svg>
+    <svg class="icon"><use href="#i-up"/></svg>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/pages.js"></script>
+</body>
+</html>
