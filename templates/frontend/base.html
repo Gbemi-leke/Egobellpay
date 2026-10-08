@@ -86,20 +86,20 @@
         <div class="col-6 col-lg-2">
           <h3 class="footer__head">Products</h3>
           <ul class="footer__links">
-            <li><a href="register.html">Personal account</a></li>
-            <li><a href="register.html?type=business">Business account</a></li>
-            <li><a href="#business">POS terminals</a></li>
-            <li><a href="#products">Virtual cards</a></li>
+            <li><a href="{% url 'frontend:register' %}">Personal account</a></li>
+            <li><a href="{% url 'frontend:register' %}?type=business">Business account</a></li>
+            <li><a href="">POS terminals</a></li>
+            <li><a href="">Virtual cards</a></li>
           </ul>
         </div>
         <div class="col-6 col-lg-2">
           <h3 class="footer__head">Company</h3>
           <ul class="footer__links">
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="api-docs.html">API docs</a></li>
-            <li><a href="privacy.html">Privacy policy</a></li>
-            <li><a href="terms.html">Terms of service</a></li>
+            <li><a href="{% url 'frontend:about' %}">About</a></li>
+            <li><a href="{% url 'frontend:contact' %}">Contact</a></li>
+            <li><a href="{% url 'frontend:developers' %}">API docs</a></li>
+            <li><a href="">Privacy policy</a></li>
+            <li><a href="">Terms of service</a></li>
           </ul>
         </div>
       </div>

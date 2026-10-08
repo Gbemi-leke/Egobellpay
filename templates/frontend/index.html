@@ -27,7 +27,7 @@
             </h1>
             <p class="hero-lead hero-in" style="--i:4">Open a personal or business account in under five minutes. Send money, pay bills, buy airtime and accept card payments from one app.</p>
             <div class="d-flex flex-wrap align-items-center gap-3 gap-sm-4 hero-in" style="--i:5">
-              <a class="btn btn-mint btn-lg btn-arrow" href="register.html">Open a free account <svg class="icon"><use href="#i-arrow"/></svg></a>
+              <a class="btn btn-mint btn-lg btn-arrow" href="{% url 'frontend:register' %}">Open a free account <svg class="icon"><use href="#i-arrow"/></svg></a>
               <span class="hero-note">All you need is your BVN and a selfie.</span>
             </div>
           </div>
@@ -233,7 +233,7 @@
           <div class="col-lg-6">
             <h2 class="band__title" id="bandTitle">Run your business on it too.</h2>
             <p class="band__text reveal">Open a business account in minutes and take card payments on the Android phone you already own.</p>
-            <a class="btn btn-mint btn-lg reveal" href="register.html?type=business">Open a business account</a>
+            <a class="btn btn-mint btn-lg reveal" href="{% url 'frontend:register' %}?type=business">Open a business account</a>
           </div>
           <div class="col-lg-6">
             <ul class="band__list reveal-group">
@@ -281,7 +281,7 @@
       <div class="container">
         <div class="cta reveal">
           <h2 class="cta__title">Your account is five minutes away.</h2>
-          <a class="btn btn-paper btn-lg btn-arrow" href="register.html">Open a free account <svg class="icon"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-paper btn-lg btn-arrow" href="{% url 'frontend:register' %}">Open a free account <svg class="icon"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
     </section>

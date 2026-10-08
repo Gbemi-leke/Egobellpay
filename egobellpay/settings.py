@@ -45,6 +45,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'frontend',
     'backend',
+    'core',
+    'accounts',
+    'kyc',
+    'ledger',
 ]
 
 MIDDLEWARE = [
