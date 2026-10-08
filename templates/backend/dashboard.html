@@ -1,0 +1,141 @@
+{% extends "backend/base.html" %}
+{% load static %}
+{# Figures on this page are sample data until the page is connected to its view. #}
+{% block title %}Home{% endblock %}
+{% block heading %}{{ greeting }}, {{ user.first_name }}{% endblock %}
+{% block tools_class %} app-head__tools--wide{% endblock %}
+{% block actions %}<form class="app-search" method="get" action="{% url 'frontend:transactions' %}" role="search"><label class="visually-hidden" for="q">Search transactions</label><svg class="icon" aria-hidden="true"><use href="#a-search"/></svg><input type="search" id="q" name="q" placeholder="Search transactions" maxlength="60"></form>{% endblock %}
+
+{% block content %}
+      <div class="app-grid">
+        <div class="app-col">
+
+          <!-- Balance -->
+          <section class="balance" aria-label="Wallet">
+            <div class="balance__top">
+              <div>
+                <div class="balance__label">Wallet balance
+                  <button type="button" class="balance__eye" data-balance-toggle aria-pressed="false" aria-label="Hide balance"><svg class="icon" aria-hidden="true"><use href="#a-eye"/></svg></button>
+                </div>
+                <div class="balance__amount" data-balance data-count="248500">₦248,500.00</div>
+              </div>
+              <div class="balance__ids">
+                <span class="balance__acct"><span class="visually-hidden">Account number </span>9012 345 678
+                  <button type="button" data-copy="9012345678" data-copied="Account number copied" aria-label="Copy account number"><svg class="icon" aria-hidden="true"><use href="#a-copy"/></svg></button></span>
+                {% if user.tag %}<span class="balance__tag">@{{ user.tag }}</span>{% endif %}
+              </div>
+            </div>
+            <div class="balance__actions">
+              <a class="btn btn-mint" href="{% url 'frontend:send_money' %}"><svg class="icon" aria-hidden="true"><use href="#a-send"/></svg>Send money</a>
+              <a class="btn btn-line" href="{% url 'frontend:add_money' %}"><svg class="icon" aria-hidden="true"><use href="#a-plus"/></svg>Add money</a>
+              <a class="btn btn-line" href="{% url 'frontend:bills' %}"><svg class="icon" aria-hidden="true"><use href="#a-bill"/></svg>Pay a bill</a>
+            </div>
+          </section>
+
+          <!-- Shortcuts -->
+          <nav class="shortcuts" aria-label="Bills and airtime">
+            <a class="shortcut" href="{% url 'frontend:bills' %}#airtime"><span class="shortcut__icon"><svg class="icon" aria-hidden="true"><use href="#a-phone"/></svg></span>Airtime</a>
+            <a class="shortcut" href="{% url 'frontend:bills' %}#data"><span class="shortcut__icon"><svg class="icon" aria-hidden="true"><use href="#a-data"/></svg></span>Data</a>
+            <a class="shortcut" href="{% url 'frontend:bills' %}#power"><span class="shortcut__icon"><svg class="icon" aria-hidden="true"><use href="#a-bolt"/></svg></span>Electricity</a>
+            <a class="shortcut" href="{% url 'frontend:bills' %}#tv"><span class="shortcut__icon"><svg class="icon" aria-hidden="true"><use href="#a-tv"/></svg></span>Cable TV</a>
+          </nav>
+
+          <!-- Activity -->
+          <section class="card-panel" aria-labelledby="activityTitle">
+            <div class="card-panel__head">
+              <h2 class="card-panel__title" id="activityTitle">Recent activity</h2>
+              <a class="card-panel__link" href="{% url 'frontend:transactions' %}">See all</a>
+            </div>
+            <div class="table-scroll">
+              <table class="activity" role="table">
+                <thead role="rowgroup">
+                  <tr role="row"><th role="columnheader" scope="col">Name</th><th role="columnheader" scope="col">Type</th><th role="columnheader" scope="col">Date</th><th role="columnheader" scope="col">Status</th><th role="columnheader" scope="col" class="activity__num">Amount</th></tr>
+                </thead>
+                <tbody role="rowgroup">
+                  <tr role="row"><td role="cell" class="activity__name">Chidi Okafor</td><td role="cell">Bank transfer</td><td role="cell">Today, 10:42</td><td role="cell"><span class="pill pill--ok">Successful</span></td><td role="cell" class="activity__num mono">−₦15,000</td></tr>
+                  <tr role="row"><td role="cell" class="activity__name">Airtime top-up</td><td role="cell">Airtime</td><td role="cell">Today, 08:15</td><td role="cell"><span class="pill pill--wait">Pending</span></td><td role="cell" class="activity__num mono">−₦2,000</td></tr>
+                  <tr role="row"><td role="cell" class="activity__name">Tunde Bakare</td><td role="cell">Deposit</td><td role="cell">Yesterday, 18:03</td><td role="cell"><span class="pill pill--ok">Successful</span></td><td role="cell" class="activity__num mono is-credit">+₦80,000</td></tr>
+                  <tr role="row"><td role="cell" class="activity__name">Electricity token</td><td role="cell">Electricity</td><td role="cell">Yesterday, 14:20</td><td role="cell"><span class="pill pill--ok">Successful</span></td><td role="cell" class="activity__num mono">−₦10,000</td></tr>
+                  <tr role="row"><td role="cell" class="activity__name">Ngozi Adeyemi</td><td role="cell">Bank transfer</td><td role="cell">Yesterday, 09:11</td><td role="cell"><span class="pill ">Reversed</span></td><td role="cell" class="activity__num mono is-struck">−₦5,000</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <div class="app-col">
+          <!-- Spending: one bar per day, value shown on hover or keyboard focus -->
+          <section class="card-panel" aria-labelledby="spendTitle">
+            <div class="card-panel__head">
+              <h2 class="card-panel__title" id="spendTitle">Spent in the last 7 days</h2>
+              <span class="card-panel__figure mono">₦75,250</span>
+            </div>
+            <ul class="spend" aria-label="Money spent on each of the last 7 days">
+              <li class="spend__day" tabindex="0">
+                <span class="spend__value mono">₦4,200</span>
+                <span class="spend__bar" style="height: 28px"></span>
+                <span class="spend__label">Fri</span>
+              </li>
+              <li class="spend__day" tabindex="0">
+                <span class="spend__value mono">₦0</span>
+                <span class="spend__bar" style="height: 4px"></span>
+                <span class="spend__label">Sat</span>
+              </li>
+              <li class="spend__day" tabindex="0">
+                <span class="spend__value mono">₦1,500</span>
+                <span class="spend__bar" style="height: 10px"></span>
+                <span class="spend__label">Sun</span>
+              </li>
+              <li class="spend__day" tabindex="0">
+                <span class="spend__value mono">₦22,500</span>
+                <span class="spend__bar" style="height: 150px"></span>
+                <span class="spend__label">Mon</span>
+              </li>
+              <li class="spend__day" tabindex="0">
+                <span class="spend__value mono">₦20,000</span>
+                <span class="spend__bar" style="height: 133px"></span>
+                <span class="spend__label">Tue</span>
+              </li>
+              <li class="spend__day" tabindex="0">
+                <span class="spend__value mono">₦10,000</span>
+                <span class="spend__bar" style="height: 67px"></span>
+                <span class="spend__label">Wed</span>
+              </li>
+              <li class="spend__day is-today" tabindex="0">
+                <span class="spend__value mono">₦17,050</span>
+                <span class="spend__bar" style="height: 114px"></span>
+                <span class="spend__label">Thu<span class="visually-hidden"> (today)</span></span>
+              </li>
+            </ul>
+          </section>
+
+          <!-- Savings target -->
+          <section class="card-panel" aria-labelledby="goalTitle">
+            <div class="card-panel__head">
+              <h2 class="card-panel__title" id="goalTitle">School fees target</h2>
+              <a class="card-panel__link" href="{% url 'frontend:savings' %}">Open savings</a>
+            </div>
+            <div class="meter">
+              <div class="meter__row"><span><span class="mono">₦186,000</span> saved of <span class="mono">₦300,000</span></span><strong class="mono">62%</strong></div>
+              <div class="meter__track" role="img" aria-label="62 percent of the target saved"><span class="meter__fill" style="width: 62%"></span></div>
+            </div>
+          </section>
+
+          <!-- Send again -->
+          <section class="card-panel" aria-labelledby="againTitle">
+            <div class="card-panel__head">
+              <h2 class="card-panel__title" id="againTitle">Send again</h2>
+              <a class="card-panel__link" href="{% url 'frontend:beneficiaries' %}">All recipients</a>
+            </div>
+            <ul class="people">
+              <li><a class="person person--link" href="{% url 'frontend:send_money' %}?to=chidi"><span class="person__av" aria-hidden="true">CO</span>
+                <span class="person__text"><span class="person__name d-block">Chidi Okafor</span><span class="person__meta d-block">GTBank 0123456789</span></span><svg class="icon" aria-hidden="true"><use href="#a-arrow"/></svg></a></li>
+              <li><a class="person person--link" href="{% url 'frontend:send_money' %}?to=tunde"><span class="person__av" aria-hidden="true">TB</span>
+                <span class="person__text"><span class="person__name d-block">Tunde Bakare</span><span class="person__meta d-block">Access Bank 0098765432</span></span><svg class="icon" aria-hidden="true"><use href="#a-arrow"/></svg></a></li>
+              <li><a class="person person--link" href="{% url 'frontend:send_money' %}?to=ngozi"><span class="person__av" aria-hidden="true">NA</span>
+                <span class="person__text"><span class="person__name d-block">Ngozi Adeyemi</span><span class="person__meta d-block">UBA 2087654321</span></span><svg class="icon" aria-hidden="true"><use href="#a-arrow"/></svg></a></li>
+            </ul>
+          </section>
+        </div>
+      </div>
+{% endblock %}

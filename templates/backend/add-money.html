@@ -1,0 +1,61 @@
+{% extends "backend/base.html" %}
+{% load static %}
+{# Figures on this page are sample data until the page is connected to its view. #}
+{% block title %}Add money{% endblock %}
+{% block heading %}Add money{% endblock %}
+{% block sub %}<p class="app-head__sub">Top up your wallet by bank transfer or with a card.</p>{% endblock %}
+
+{% block content %}
+      <div class="app-grid app-grid--form">
+        <div class="app-col">
+          <section class="card-panel" aria-labelledby="bankTitle">
+            <div class="card-panel__head"><h2 class="card-panel__title" id="bankTitle">Bank transfer</h2><span class="pill pill--ok pill--plain">Free</span></div>
+            <p class="card-panel__text mb-3">Send money from any bank app to this account. It usually arrives within a minute.</p>
+            <dl class="rows">
+              <div class="rows__row align-items-center"><dt>Account number</dt><dd class="d-flex align-items-center gap-2"><span class="mono">9012345678</span>
+                <button type="button" class="icon-btn icon-btn--sm" data-copy="9012345678" data-copied="Account number copied" aria-label="Copy account number"><svg class="icon" aria-hidden="true"><use href="#a-copy"/></svg></button></dd></div>
+              <div class="rows__row"><dt>Bank</dt><dd>Partner Bank</dd></div>
+              <div class="rows__row"><dt>Account name</dt><dd>EgoBellPay / {{ user.get_full_name }}</dd></div>
+            </dl>
+            <button type="button" class="btn btn-ghost mt-3" data-share="Pay me on EgoBellPay. Account number 9012345678, Partner Bank, {{ user.get_full_name }}."><svg class="icon" aria-hidden="true"><use href="#a-share"/></svg>Share these details</button>
+          </section>
+
+          <section class="card-panel" aria-labelledby="cardTitle">
+            <div class="card-panel__head"><h2 class="card-panel__title" id="cardTitle">Debit card</h2></div>
+            <!-- data-form is template only. In Django this posts to a view that starts the card payment and redirects to your card processor. -->
+            <form class="form-stack" action="#" method="post" novalidate data-form data-success="This is where your card processor's payment page opens.">
+              {% csrf_token %}
+              <div class="field">
+                <label for="cardAmount">Amount</label>
+                <div class="money"><input class="form-control" type="text" inputmode="numeric" id="cardAmount" name="amount" data-amount data-rule="amount" data-min="100" data-max="500000" required autocomplete="off" data-msg="Enter an amount."></div>
+                <div class="chips" role="group" aria-label="Quick amounts"><button type="button" class="chip" data-amount-set="2000" aria-pressed="false">₦2,000</button><button type="button" class="chip" data-amount-set="5000" aria-pressed="false">₦5,000</button><button type="button" class="chip" data-amount-set="10000" aria-pressed="false">₦10,000</button><button type="button" class="chip" data-amount-set="50000" aria-pressed="false">₦50,000</button></div>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <button type="submit" class="btn btn-brand btn-lg"><span class="spinner" aria-hidden="true"></span>Continue to card payment<svg class="icon" aria-hidden="true"><use href="#a-arrow"/></svg></button>
+              <div class="form-status" role="status"></div>
+            </form>
+          </section>
+        </div>
+
+        <div class="app-col">
+          <section class="card-panel card-panel--dark" aria-labelledby="tagTitle">
+            <div class="card-panel__head"><h2 class="card-panel__title card-panel__title--sm" id="tagTitle">Get paid by tag</h2></div>
+            <p class="card-panel__text mb-3">Anyone on EgoBellPay can send to your tag. It is free and arrives straight away.</p>
+            {% if user.tag %}
+            <div class="copybox"><span class="copybox__value text-dark">@{{ user.tag }}</span>
+              <button type="button" class="btn btn-soft btn-sm" data-copy="@{{ user.tag }}" data-copied="Tag copied"><svg class="icon" aria-hidden="true"><use href="#a-copy"/></svg>Copy</button></div>
+            {% else %}
+            <a class="btn btn-mint" href="{% url 'frontend:settings' %}">Choose your tag</a>
+            {% endif %}
+          </section>
+
+          <section class="card-panel" aria-labelledby="inTitle">
+            <div class="card-panel__head"><h2 class="card-panel__title card-panel__title--sm" id="inTitle">Recent money in</h2><a class="card-panel__link" href="{% url 'frontend:transactions' %}">See all</a></div>
+            <ul class="people">
+              <li class="person"><span class="person__av" aria-hidden="true">TB</span><span class="person__text"><span class="person__name d-block">Tunde Bakare</span><span class="person__meta d-block">Yesterday, 18:03</span></span><span class="mono text-success fw-medium">+₦80,000</span></li>
+              <li class="person"><span class="person__av" aria-hidden="true">BL</span><span class="person__text"><span class="person__name d-block">Brightpath Ltd</span><span class="person__meta d-block">30 Sep, 09:00</span></span><span class="mono text-success fw-medium">+₦250,000</span></li>
+            </ul>
+          </section>
+        </div>
+      </div>
+{% endblock %}

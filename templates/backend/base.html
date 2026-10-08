@@ -1,0 +1,219 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{% block title %}Home{% endblock %} | EgoBellPay</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0E1F18">
+  <link rel="icon" type="image/png" href="{% static 'backend/img/favicon.png' %}">
+  <link rel="apple-touch-icon" href="{% static 'backend/img/apple-touch-icon.png' %}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{% static 'backend/css/app.css' %}" rel="stylesheet">
+
+  <script>document.documentElement.className += ' js';</script>
+</head>
+<body class="app-body">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <!-- SVG icon sprite -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none" aria-hidden="true">
+    <symbol id="a-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></symbol>
+    <symbol id="a-send" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></symbol>
+    <symbol id="a-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="a-bill" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z"/><path d="M9 8h6M9 12h6"/></symbol>
+    <symbol id="a-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="a-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 10h18"/></symbol>
+    <symbol id="a-list" viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+    <symbol id="a-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20a6 6 0 0 1 12 0M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.5a5.5 5.5 0 0 1 3 5"/></symbol>
+    <symbol id="a-gift" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="4" rx="1"/><path d="M5 13v7h14v-7M12 9v11M12 9S10.5 4 8 4.5 6.5 9 12 9zM12 9s1.5-5 4-4.5S17.5 9 12 9z"/></symbol>
+    <symbol id="a-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4l2-2z"/><path d="M10 21h4"/></symbol>
+    <symbol id="a-gear" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></symbol>
+    <symbol id="a-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17v.01"/></symbol>
+    <symbol id="a-out" viewBox="0 0 24 24"><path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"/></symbol>
+    <symbol id="a-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+    <symbol id="a-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></symbol>
+    <symbol id="a-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="a-eye-off" viewBox="0 0 24 24"><path d="M4 4l16 16M9.9 5.2A9.7 9.7 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3 3.8M6.2 6.3C3.5 8.2 2 12 2 12s3.6 7 10 7c1.6 0 3-.4 4.2-1"/></symbol>
+    <symbol id="a-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="a-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
+    <symbol id="a-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="a-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="a-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 17.5h2"/></symbol>
+    <symbol id="a-data" viewBox="0 0 24 24"><path d="M3 9a14 14 0 0 1 18 0M6 12.5a9.5 9.5 0 0 1 12 0M9 16a5 5 0 0 1 6 0M12 19.5v.01"/></symbol>
+    <symbol id="a-bolt" viewBox="0 0 24 24"><path d="M13 3L5 13.5h6L10 21l8-10.5h-6L13 3z"/></symbol>
+    <symbol id="a-tv" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 21h8M9 3l3 3 3-3"/></symbol>
+    <symbol id="a-down" viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></symbol>
+    <symbol id="a-share" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.2 10.9l7.6-3.8M8.2 13.1l7.6 3.8"/></symbol>
+    <symbol id="a-snow" viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9"/></symbol>
+    <symbol id="a-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2.2 2.2L15 10.5"/></symbol>
+    <symbol id="a-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></symbol>
+    <symbol id="a-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></symbol>
+    <symbol id="a-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5"/></symbol>
+    <symbol id="a-chat" viewBox="0 0 24 24"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-5 4v-4H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></symbol>
+    <symbol id="a-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></symbol>
+    <symbol id="a-call" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1C10.7 20 4 13.3 4 5a1 1 0 0 1 1-1z"/></symbol>
+    <symbol id="a-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="a-flip" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 8.5M20 4v4.5h-4.5M20 12a8 8 0 0 1-13.7 5.6L4 15.5M4 20v-4.5h4.5"/></symbol>
+    <symbol id="a-bank" viewBox="0 0 24 24"><path d="M3 10l9-6 9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></symbol>
+  </svg>
+
+  <div class="app">
+
+    <!-- ============ SIDEBAR (a slide-in menu below 992px) ============ -->
+    {# The view passes "page" (for example "send-money") so the right item is highlighted. #}
+    <aside class="app-side offcanvas-lg offcanvas-start" id="appSide" tabindex="-1" aria-label="Menu">
+      <div class="app-side__in">
+        <a class="brand" href="{% url 'frontend:dashboard' %}">
+          <span class="brand__mark"><img src="{% static 'backend/img/logo-mark.png' %}" alt=""></span>
+          <span class="brand__name">EgoBellPay</span>
+        </a>
+
+        <nav class="app-nav" aria-label="Main">
+          <a class="app-nav__item{% if page == 'dashboard' %} is-active" aria-current="page{% endif %}" href="{% url 'frontend:dashboard' %}"><svg class="icon" aria-hidden="true"><use href="#a-home"/></svg><span>Home</span></a>
+          <a class="app-nav__item{% if page == 'send-money' %} is-active" aria-current="page{% endif %}" href="{% url 'frontend:send_money' %}"><svg class="icon" aria-hidden="true"><use href="#a-send"/></svg><span>Send money</span></a>
+          <a class="app-nav__item{% if page == 'add-money' %} is-active" aria-current="page{% endif %}" href="{% url 'frontend:add_money' %}"><svg class="icon" aria-hidden="true"><use href="#a-plus"/></svg><span>Add money</span></a>
+          <a class="app-nav__item{% if page == 'bills' %} is-active" aria-current="page{% endif %}" href="{% url 'frontend:bills' %}"><svg class="icon" aria-hidden="true"><use href="#a-bill"/></svg><span>Bills and airtime</span></a>
+          <a class="app-nav__item{% if page == 'savings' %} is-active" aria-current="page{% endif %}" href="{% url 'frontend:savings' %}"><svg class="icon" aria-hidden="true"><use href="#a-target"/></svg><span>Savings</span></a>
+          <a class="app-nav__item{% if page == 'cards' %} is-active" aria-current="page{% endif %}" href="{% url 'frontend:cards' %}"><svg class="icon" aria-hidden="true"><use href="#a-card"/></svg><span>Cards</span></a>
+          <a class="app-nav__item{% if page == 'transactions' %} is-active" aria-current="page{% endif %}" href="{% url 'frontend:transactions' %}"><svg class="icon" aria-hidden="true"><use href="#a-list"/></svg><span>Activity</span></a>
+        </nav>
+        <nav class="app-nav" aria-label="More">
+          <a class="app-nav__item{% if page == 'beneficiaries' %} is-active" aria-current="page{% endif %}" href="{% url 'frontend:beneficiaries' %}"><svg class="icon" aria-hidden="true"><use href="#a-users"/></svg><span>Saved recipients</span></a>
+          <a class="app-nav__item{% if page == 'referrals' %} is-active" aria-current="page{% endif %}" href="{% url 'frontend:referrals' %}"><svg class="icon" aria-hidden="true"><use href="#a-gift"/></svg><span>Invite friends</span></a>
+          <a class="app-nav__item{% if page == 'notifications' %} is-active" aria-current="page{% endif %}" href="{% url 'frontend:notifications' %}"><svg class="icon" aria-hidden="true"><use href="#a-bell"/></svg><span>Notifications</span><span class="app-nav__count" data-unread>2<span class="visually-hidden"> unread</span></span></a>
+          <a class="app-nav__item{% if page == 'settings' %} is-active" aria-current="page{% endif %}" href="{% url 'frontend:settings' %}"><svg class="icon" aria-hidden="true"><use href="#a-gear"/></svg><span>Settings</span></a>
+          <a class="app-nav__item{% if page == 'support' %} is-active" aria-current="page{% endif %}" href="{% url 'frontend:support' %}"><svg class="icon" aria-hidden="true"><use href="#a-help"/></svg><span>Help</span></a>
+        </nav>
+
+        <div class="app-side__foot">
+          {% if user.kyc_tier %}
+          <a class="app-status is-ok" href="{% url 'frontend:settings' %}#verify"><span class="app-status__dot"><svg class="icon" aria-hidden="true"><use href="#a-check"/></svg></span><span>Identity verified</span></a>
+          {% else %}
+          <a class="app-status" href="{% url 'frontend:settings' %}#verify"><span class="app-status__dot"><svg class="icon" aria-hidden="true"><use href="#a-info"/></svg></span><span>Verify your identity</span></a>
+          {% endif %}
+          <form method="post" action="{% url 'frontend:logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="app-signout"><svg class="icon" aria-hidden="true"><use href="#a-out"/></svg>Sign out</button>
+          </form>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main class="app-main" id="main">
+      <header class="app-head">
+        <div class="app-head__text">
+          <h1 class="app-head__title">{% block heading %}{% endblock %}</h1>
+          {% block sub %}{% endblock %}
+        </div>
+        <div class="app-head__tools{% block tools_class %}{% endblock %}">{% block actions %}{% endblock %}
+          {# Sample notifications. Replace with the user's own once that model exists. #}
+          <div class="dropdown">
+            <button type="button" class="icon-btn" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Notifications, 2 unread"><svg class="icon icon--bell" aria-hidden="true"><use href="#a-bell"/></svg><span class="icon-btn__dot" data-unread></span></button>
+            <div class="dropdown-menu dropdown-menu-end menu-notes">
+              <div class="menu-notes__head"><strong>Notifications</strong><a class="text-link small-text" href="{% url 'frontend:notifications' %}">See all</a></div>
+              <div class="note is-unread"><span class="note__icon"><svg class="icon" aria-hidden="true"><use href="#a-plus"/></svg></span><div class="note__text"><div class="note__title">Money received</div><div class="note__body">Tunde Bakare sent you ₦80,000.00.</div><div class="note__time">Yesterday, 18:03</div></div><span class="note__dot" data-unread><span class="visually-hidden">Unread</span></span></div>
+              <div class="note is-unread"><span class="note__icon"><svg class="icon" aria-hidden="true"><use href="#a-shield"/></svg></span><div class="note__text"><div class="note__title">New sign-in</div><div class="note__body">Your account was opened on a Tecno Camon 20 in Abeokuta.</div><div class="note__time">Yesterday, 08:40</div></div><span class="note__dot" data-unread><span class="visually-hidden">Unread</span></span></div>
+              <div class="note"><span class="note__icon"><svg class="icon" aria-hidden="true"><use href="#a-target"/></svg></span><div class="note__text"><div class="note__title">Auto-save done</div><div class="note__body">₦5,000.00 moved to School fees.</div><div class="note__time">Fri 2 Oct, 07:00</div></div><span class="note__dot"></span></div>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button type="button" class="app-avatar" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Your account">{{ user.first_name|slice:":1"|upper }}</button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li class="menu-who"><strong>{{ user.get_full_name }}</strong><span>{% if user.tag %}@{{ user.tag }}{% else %}{{ user.email }}{% endif %}</span></li>
+              <li><a class="dropdown-item" href="{% url 'frontend:settings' %}"><svg class="icon" aria-hidden="true"><use href="#a-user"/></svg>Profile</a></li>
+              <li><a class="dropdown-item" href="{% url 'frontend:settings' %}#security"><svg class="icon" aria-hidden="true"><use href="#a-lock"/></svg>Password and PIN</a></li>
+              <li><a class="dropdown-item" href="{% url 'frontend:support' %}"><svg class="icon" aria-hidden="true"><use href="#a-help"/></svg>Help</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <form method="post" action="{% url 'frontend:logout' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="dropdown-item"><svg class="icon" aria-hidden="true"><use href="#a-out"/></svg>Sign out</button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </header>
+{% block content %}{% endblock %}
+    </main>
+
+    <!-- ============ BOTTOM TABS (phones and tablets) ============ -->
+    <nav class="app-tabs" aria-label="Quick links">
+      <a class="app-tabs__item{% if page == 'dashboard' %} is-active" aria-current="page{% endif %}" href="{% url 'frontend:dashboard' %}"><svg class="icon" aria-hidden="true"><use href="#a-home"/></svg><span>Home</span></a>
+      <a class="app-tabs__item{% if page == 'send-money' %} is-active" aria-current="page{% endif %}" href="{% url 'frontend:send_money' %}"><svg class="icon" aria-hidden="true"><use href="#a-send"/></svg><span>Send</span></a>
+      <a class="app-tabs__item{% if page == 'bills' %} is-active" aria-current="page{% endif %}" href="{% url 'frontend:bills' %}"><svg class="icon" aria-hidden="true"><use href="#a-bill"/></svg><span>Bills</span></a>
+      <a class="app-tabs__item{% if page == 'transactions' %} is-active" aria-current="page{% endif %}" href="{% url 'frontend:transactions' %}"><svg class="icon" aria-hidden="true"><use href="#a-list"/></svg><span>Activity</span></a>
+      <button type="button" class="app-tabs__item" data-bs-toggle="offcanvas" data-bs-target="#appSide" aria-controls="appSide"><svg class="icon" aria-hidden="true"><use href="#a-more"/></svg><span>More</span></button>
+    </nav>
+  </div>
+
+  <!-- ============ PAY SHEET: review, PIN, done. Opened by any form with data-pay. ============ -->
+  <div class="modal fade" id="paySheet" tabindex="-1" aria-labelledby="payTitle" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="payTitle">Review</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="pay__step is-on" data-pay-step="review">
+            <div class="pay__hero">
+              <div class="pay__hero-label" data-pay-label>You are sending</div>
+              <div class="pay__amount" data-pay-amount></div>
+              <div class="pay__to" data-pay-to></div>
+            </div>
+            <dl class="rows" data-pay-rows></dl>
+            <div class="pay__btns">
+              <button type="button" class="btn btn-brand btn-lg" data-pay-next>Continue</button>
+              <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Change details</button>
+            </div>
+          </div>
+
+          <div class="pay__step" data-pay-step="pin">
+            <div class="pay__pin">
+              <p>Enter your 4-digit PIN to approve this payment.</p>
+              <div class="pin" role="group" aria-label="4-digit PIN">
+                <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 1">
+                <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 2">
+                <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 3">
+                <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 4">
+              </div>
+              <p class="pay__error" role="alert"></p>
+              <a class="text-link small-text" href="{% url 'frontend:settings' %}#security">Forgot your PIN?</a>
+            </div>
+            <div class="pay__btns">
+              <button type="button" class="btn btn-brand btn-lg" data-pay-confirm><span class="spinner" aria-hidden="true"></span><span data-pay-confirm-text>Pay</span></button>
+              <button type="button" class="btn btn-ghost" data-pay-back>Back</button>
+            </div>
+            <p class="pay__safe"><svg class="icon" aria-hidden="true"><use href="#a-lock"/></svg><span>Your PIN is checked on our servers and never stored on this device.</span></p>
+          </div>
+
+          <div class="pay__step" data-pay-step="done">
+            <div class="pay__done">
+              <span class="tick tick--xl"><svg class="icon" aria-hidden="true"><use href="#a-check"/></svg></span>
+              <h2 data-pay-done-title>Money sent</h2>
+              <p data-pay-done-text></p>
+              <p class="pay__ref">Reference <span class="mono" data-pay-ref></span></p>
+              <div class="pay__token mono" data-pay-token hidden>Token 1234 5678 9012 3456 7890</div>
+            </div>
+            <div class="pay__btns">
+              <a class="btn btn-brand btn-lg" href="{% url 'frontend:transactions' %}">See it in activity</a>
+              <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Done</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% block modals %}{% endblock %}
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'backend/js/app.js' %}"></script>
+</body>
+</html>

@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -51,6 +51,11 @@ INSTALLED_APPS = [
     'ledger',
 ]
 
+AUTH_USER_MODEL = 'accounts.User'
+AUTHENTICATION_BACKENDS = ['accounts.backends.EmailOrPhoneBackend']
+LOGIN_URL = 'frontend:login'
+LOGIN_REDIRECT_URL = 'frontend:dashboard'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -84,10 +89,21 @@ WSGI_APPLICATION = 'egobellpay.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DB_NAME", "egobellpay"),
+        "USER": os.getenv("DB_USER", "egobellpay"),
+        "PASSWORD": os.getenv("DB_PASSWORD", "12345678"),
+        "HOST": os.getenv("DB_HOST", "127.0.0.1"),
+        "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
 

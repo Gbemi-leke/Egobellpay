@@ -1,0 +1,120 @@
+{% extends "backend/base.html" %}
+{% load static %}
+{# Figures on this page are sample data until the page is connected to its view. #}
+{% block title %}Cards{% endblock %}
+{% block heading %}Cards{% endblock %}
+{% block sub %}<p class="app-head__sub">A virtual card for paying online, funded from your wallet.</p>{% endblock %}
+
+{% block content %}
+      <div class="app-grid">
+        <div class="app-col">
+          <section class="card-panel" aria-labelledby="vcardTitle">
+            <div class="card-panel__head">
+              <h2 class="card-panel__title" id="vcardTitle">Virtual card</h2>
+              <span class="pill pill--ok" data-card-state>Active</span>
+            </div>
+
+            <!-- The details on the back are sample digits. In production they come from your card provider after a PIN check. -->
+            <div class="vcard mb-4" id="vcard">
+              <div class="vcard__in">
+                <div class="vcard__face vcard__face--front" aria-hidden="false">
+                  <div class="vcard__row">
+                    <span class="vcard__brand"><img src="{% static 'backend/img/logo-mark.png' %}" alt="">EgoBellPay</span>
+                    <span class="vcard__kind">Virtual</span>
+                  </div>
+                  <span class="vcard__chip" aria-hidden="true"></span>
+                  <div class="vcard__number"><span class="visually-hidden">Card ending </span><span aria-hidden="true">•••• •••• •••• </span>4821</div>
+                  <div class="vcard__row mt-2">
+                    <div><div class="vcard__small">Card holder</div><div class="vcard__value">{{ user.get_full_name }}</div></div>
+                    <div class="text-end"><div class="vcard__small">Expires</div><div class="vcard__value mono">08/29</div></div>
+                  </div>
+                </div>
+                <div class="vcard__face vcard__face--back" aria-hidden="true">
+                  <div class="vcard__stripe" aria-hidden="true"></div>
+                  <div class="vcard__small">Card number</div>
+                  <div class="vcard__number mt-0">5399 0000 0000 4821</div>
+                  <div class="vcard__row mt-auto">
+                    <div><div class="vcard__small">Expires</div><div class="vcard__value mono">08/29</div></div>
+                    <div class="text-end"><div class="vcard__small mb-1">Security code</div><div class="vcard__cvv">000</div></div>
+                  </div>
+                </div>
+                <div class="vcard__frozen"><svg class="icon" aria-hidden="true"><use href="#a-snow"/></svg>Frozen</div>
+              </div>
+            </div>
+
+            <div class="card-actions">
+              <button type="button" class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#fundCard"><svg class="icon" aria-hidden="true"><use href="#a-plus"/></svg>Fund card</button>
+              <button type="button" class="btn btn-ghost" data-card-flip="#vcard" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#a-flip"/></svg><span>Show details</span></button>
+              <button type="button" class="btn btn-ghost" data-copy="5399000000004821" data-copied="Card number copied"><svg class="icon" aria-hidden="true"><use href="#a-copy"/></svg>Copy number</button>
+            </div>
+          </section>
+
+          <section class="card-panel" aria-labelledby="cardSetTitle">
+            <div class="card-panel__head"><h2 class="card-panel__title" id="cardSetTitle">Card controls</h2></div>
+            <div class="set-list">
+              <div class="set-row">
+                <div class="set-row__text"><label class="set-row__title d-block" for="cardFreeze">Freeze card</label><div class="set-row__note">Stops every payment until you turn it back on.</div></div>
+                <div class="form-check form-switch m-0 p-0"><input class="form-check-input m-0" type="checkbox" role="switch" id="cardFreeze" name="cardFreeze" data-card-freeze="#vcard"></div>
+              </div>
+              <div class="set-row">
+                <div class="set-row__text"><label class="set-row__title d-block" for="cardOnline">Online payments</label><div class="set-row__note">Pay on websites and in apps.</div></div>
+                <div class="form-check form-switch m-0 p-0"><input class="form-check-input m-0" type="checkbox" role="switch" id="cardOnline" name="cardOnline" checked></div>
+              </div>
+              <div class="set-row">
+                <div class="set-row__text"><label class="set-row__title d-block" for="cardAbroad">Payments in other currencies</label><div class="set-row__note">For sites that charge in dollars, pounds or euros.</div></div>
+                <div class="form-check form-switch m-0 p-0"><input class="form-check-input m-0" type="checkbox" role="switch" id="cardAbroad" name="cardAbroad"></div>
+              </div>
+              <div class="set-row">
+                <div class="set-row__text"><label class="set-row__title d-block" for="cardSubs">Subscriptions</label><div class="set-row__note">Let services charge this card every month.</div></div>
+                <div class="form-check form-switch m-0 p-0"><input class="form-check-input m-0" type="checkbox" role="switch" id="cardSubs" name="cardSubs" checked></div>
+              </div>
+              <div class="set-row">
+                <div class="set-row__text"><label class="set-row__title d-block" for="cardLimit">Monthly spending limit</label><div class="set-row__note">Payments above this are declined.</div></div>
+                <select class="form-select w-auto" id="cardLimit" name="limit"><option>₦50,000</option><option selected>₦100,000</option><option>₦250,000</option><option>₦500,000</option></select>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="app-col">
+          <div class="stat"><div class="stat__label">Card balance</div><div class="stat__value">₦12,600.00</div><div class="stat__note">Separate from your wallet balance</div></div>
+
+          <section class="card-panel" aria-labelledby="cardTxTitle">
+            <div class="card-panel__head"><h2 class="card-panel__title card-panel__title--sm" id="cardTxTitle">Card payments</h2><a class="card-panel__link" href="{% url 'frontend:transactions' %}">See all</a></div>
+            <ul class="people">
+              <li class="person"><span class="person__av" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#a-card"/></svg></span><span class="person__text"><span class="person__name d-block">Online store</span><span class="person__meta d-block">28 Sep, 16:44</span></span><span class="mono">−₦12,400</span></li>
+              <li class="person"><span class="person__av" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#a-card"/></svg></span><span class="person__text"><span class="person__name d-block">Music subscription</span><span class="person__meta d-block">21 Sep, 06:02</span></span><span class="mono">−₦1,300</span></li>
+              <li class="person"><span class="person__av" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#a-plus"/></svg></span><span class="person__text"><span class="person__name d-block">Card funded</span><span class="person__meta d-block">20 Sep, 19:15</span></span><span class="mono text-success fw-medium">+₦25,000</span></li>
+            </ul>
+          </section>
+
+          <p class="notice"><svg class="icon" aria-hidden="true"><use href="#a-shield"/></svg><span>We will never call, text or email you for your card number, security code or PIN. Anyone who asks is not from EgoBellPay.</span></p>
+        </div>
+      </div>
+{% endblock %}
+
+{% block modals %}
+  <div class="modal fade" id="fundCard" tabindex="-1" aria-labelledby="fundCardTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="fundCardTitle">Fund your card</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="form-stack" action="#" method="post" novalidate data-pay data-pay-title="Review" data-pay-label="You are moving" data-pay-verb="Fund card with" data-pay-done="Card funded" data-pay-to-text="your virtual card">
+              {% csrf_token %}
+              <div class="field">
+                <label for="fundAmount">Amount</label>
+                <div class="money"><input class="form-control" type="text" inputmode="numeric" id="fundAmount" name="amount" data-amount data-rule="amount" data-min="500" data-max="248500" data-max-msg="That is more than your balance of ₦248,500.00." required autocomplete="off" data-msg="Enter an amount."></div>
+                <div class="chips" role="group" aria-label="Quick amounts"><button type="button" class="chip" data-amount-set="2000" aria-pressed="false">₦2,000</button><button type="button" class="chip" data-amount-set="5000" aria-pressed="false">₦5,000</button><button type="button" class="chip" data-amount-set="10000" aria-pressed="false">₦10,000</button><button type="button" class="chip" data-amount-set="20000" aria-pressed="false">₦20,000</button></div>
+                <div class="invalid-feedback" role="alert"></div>
+                <div class="field__hint">Wallet balance ₦248,500.00</div>
+              </div>
+              <button type="submit" class="btn btn-brand btn-lg"><span class="spinner" aria-hidden="true"></span>Continue<svg class="icon" aria-hidden="true"><use href="#a-arrow"/></svg></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

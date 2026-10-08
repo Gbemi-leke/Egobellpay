@@ -26,5 +26,5 @@ admin.site.index_title  = "EgobellPay Dashboard"
 urlpatterns = [
     path('django-admin/', admin.site.urls),
     path('', include('frontend.urls')),
-    # path('', include('backend.urls')),
+    path('', include('backend.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

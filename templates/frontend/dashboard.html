@@ -1,0 +1,59 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | EgoBellPay</title>
+  <meta name="theme-color" content="#0E1F18">
+  <link rel="icon" type="image/png" href="{% static 'frontend/img/favicon.png' %}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{% static 'frontend/css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'frontend/css/pages.css' %}" rel="stylesheet">
+</head>
+<body>
+  {# Placeholder page: it proves sign-in works. The real dashboard replaces it. #}
+  <nav class="navbar site-nav fixed-top" aria-label="Main" data-bs-theme="dark">
+    <div class="container">
+      <a class="navbar-brand brand" href="{% url 'frontend:dashboard' %}">
+        <span class="brand__mark"><img src="{% static 'frontend/img/logo-mark.png' %}" alt=""></span>
+        <span class="brand__name">EgoBellPay</span>
+      </a>
+      <form method="post" action="{% url 'frontend:logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-mint">Sign out</button>
+      </form>
+    </div>
+  </nav>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1 class="page-hero__title">Welcome, {{ user.first_name }}.</h1>
+        <p class="page-hero__lead">You are signed in. Your wallet, transfers and bills will appear on this page once they are built.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="row gy-5 gx-lg-5">
+          <div class="col-lg-5"><h2 class="section-title">Your account.</h2></div>
+          <div class="col-lg-7">
+            <dl class="fact-list">
+              <div><dt>Name</dt><dd>{{ user.get_full_name }}</dd></div>
+              <div><dt>Email</dt><dd>{{ user.email }}</dd></div>
+              <div><dt>Phone</dt><dd>{{ user.phone }}</dd></div>
+              <div><dt>Account type</dt><dd>{{ user.get_account_type_display }}</dd></div>
+              <div><dt>Identity check</dt><dd>{% if user.kyc_tier %}Tier {{ user.kyc_tier }}{% else %}Not verified yet{% endif %}</dd></div>
+              <div><dt>Transaction PIN</dt><dd>{% if user.has_pin %}Set{% else %}Not set{% endif %}</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

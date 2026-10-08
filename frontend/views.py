@@ -20,9 +20,6 @@ def about(request):
 def contact(request):
     return render(request, 'frontend/contact.html')
 
-# ── LOGIN ─────────────────────────────────────────────────────
-def login_view(request):
-    return render(request, 'frontend/login.html')
 
 # ── DEVELOPERS ─────────────────────────────────────────────────────
 def developers(request):

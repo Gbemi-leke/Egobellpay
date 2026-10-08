@@ -121,6 +121,15 @@
     });
   });
 
+  // Forms the server handles itself (sign in): check the fields, then let the browser submit
+  $('form[data-native]').on('submit', function (e) {
+    var $form = $(this);
+    if (!validateWithin($form)) { e.preventDefault(); return; }
+    $form.find('[type=submit]').addClass('is-loading');
+  });
+  // Coming back with the Back button should not leave the spinner running
+  $(window).on('pageshow', function () { $('form[data-native] [type=submit]').removeClass('is-loading'); });
+  
   /* ---------- 4. Password show / hide ---------- */
   $(document).on('click', '.pw__toggle', function () {
     var $input = $(this).siblings('input');

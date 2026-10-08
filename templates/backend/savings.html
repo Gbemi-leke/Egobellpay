@@ -1,0 +1,151 @@
+{% extends "backend/base.html" %}
+{% load static %}
+{# Figures on this page are sample data until the page is connected to its view. #}
+{% block title %}Savings{% endblock %}
+{% block heading %}Savings{% endblock %}
+{% block sub %}<p class="app-head__sub">Put money aside for the things that matter, a little at a time.</p>{% endblock %}
+{% block actions %}<button type="button" class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#newGoal"><svg class="icon" aria-hidden="true"><use href="#a-plus"/></svg>New target</button>{% endblock %}
+
+{% block content %}
+      <div class="stats">
+        <div class="stat"><div class="stat__label">Total saved</div><div class="stat__value">₦236,000</div><div class="stat__note">Across 2 targets</div></div>
+        <div class="stat"><div class="stat__label">Saved this month</div><div class="stat__value">₦25,000</div><div class="stat__note">Since 1 October</div></div>
+        <div class="stat"><div class="stat__label">Next auto-save</div><div class="stat__value">₦5,000</div><div class="stat__note">Friday 9 October, to School fees</div></div>
+      </div>
+
+      <div class="goals">
+        <section class="card-panel goal" aria-label="School fees target">
+          <div class="goal__top">
+            <div class="ring" role="img" aria-label="62 percent saved">
+              <svg viewBox="0 0 100 100" aria-hidden="true"><circle class="ring__track" cx="50" cy="50" r="42"/><circle class="ring__fill" cx="50" cy="50" r="42" style="--off: 100"/></svg>
+              <span class="ring__label" aria-hidden="true">62%</span>
+            </div>
+            <div>
+              <h2 class="goal__name">School fees</h2>
+              <div class="goal__saved">₦186,000</div>
+              <div class="goal__of">saved of ₦300,000</div>
+            </div>
+          </div>
+          <div class="goal__meta"><span class="pill pill--plain">Due 15 Jan 2027</span><span class="pill pill--plain pill--ok">₦5,000 every Friday</span></div>
+          <div class="goal__btns">
+            <button type="button" class="btn btn-brand btn-sm" data-bs-toggle="modal" data-bs-target="#addToGoal"><svg class="icon" aria-hidden="true"><use href="#a-plus"/></svg>Add money</button>
+            <button type="button" class="btn btn-ghost btn-sm" data-bs-toggle="modal" data-bs-target="#withdrawGoal">Withdraw</button>
+          </div>
+        </section>
+        <section class="card-panel goal" aria-label="Rent target">
+          <div class="goal__top">
+            <div class="ring" role="img" aria-label="25 percent saved">
+              <svg viewBox="0 0 100 100" aria-hidden="true"><circle class="ring__track" cx="50" cy="50" r="42"/><circle class="ring__fill" cx="50" cy="50" r="42" style="--off: 198"/></svg>
+              <span class="ring__label" aria-hidden="true">25%</span>
+            </div>
+            <div>
+              <h2 class="goal__name">Rent</h2>
+              <div class="goal__saved">₦50,000</div>
+              <div class="goal__of">saved of ₦200,000</div>
+            </div>
+          </div>
+          <div class="goal__meta"><span class="pill pill--plain">Due 1 Mar 2027</span><span class="pill pill--plain">Auto-save off</span></div>
+          <div class="goal__btns">
+            <button type="button" class="btn btn-brand btn-sm" data-bs-toggle="modal" data-bs-target="#addToGoal"><svg class="icon" aria-hidden="true"><use href="#a-plus"/></svg>Add money</button>
+            <button type="button" class="btn btn-ghost btn-sm" data-bs-toggle="modal" data-bs-target="#withdrawGoal">Withdraw</button>
+          </div>
+        </section>
+        <section class="card-panel card-panel--dashed goal goal--new" aria-label="Start a new target">
+          <h2 class="goal__name">Saving for something else?</h2>
+          <p class="card-panel__text">Name it, set an amount and a date, and add to it whenever you like.</p>
+          <button type="button" class="btn btn-ghost" data-bs-toggle="modal" data-bs-target="#newGoal"><svg class="icon" aria-hidden="true"><use href="#a-plus"/></svg>Start a new target</button>
+        </section>
+      </div>
+{% endblock %}
+
+{% block modals %}
+  <div class="modal fade" id="newGoal" tabindex="-1" aria-labelledby="newGoalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="newGoalTitle">New target</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="form-stack" action="#" method="post" novalidate data-form data-success="Target created">
+              {% csrf_token %}
+              <div class="field">
+                <label for="goalName">What are you saving for?</label>
+                <input class="form-control" type="text" id="goalName" name="name" maxlength="40" placeholder="New laptop" required data-msg="Give your target a name.">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="goalAmount">How much do you need?</label>
+                <div class="money"><input class="form-control" type="text" inputmode="numeric" id="goalAmount" name="amount" data-amount data-rule="amount" data-min="1000" data-max="50000000" required autocomplete="off" data-msg="Enter an amount."></div>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="goalDate">By when?</label>
+                <input class="form-control" type="date" id="goalDate" name="due" data-rule="future" required data-msg="Choose a date.">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="set-row">
+                <div class="set-row__text"><label class="set-row__title d-block" for="goalAuto">Save automatically</label><div class="set-row__note">Move ₦5,000 from your wallet every Friday.</div></div>
+                <div class="form-check form-switch m-0 p-0"><input class="form-check-input m-0" type="checkbox" role="switch" id="goalAuto" name="goalAuto"></div>
+              </div>
+              <button type="submit" class="btn btn-brand btn-lg"><span class="spinner" aria-hidden="true"></span>Create target</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="addToGoal" tabindex="-1" aria-labelledby="addToGoalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="addToGoalTitle">Add to a target</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="form-stack" action="#" method="post" novalidate data-pay data-pay-title="Review" data-pay-label="You are saving" data-pay-verb="Save" data-pay-done="Saved" data-pay-to="#addGoal">
+              {% csrf_token %}
+              <div class="field">
+                <label for="addGoal">Target</label>
+                <select class="form-select" id="addGoal" name="goal" data-row="Target" required><option value="school">School fees</option><option value="rent">Rent</option></select>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="addGoalAmount">Amount</label>
+                <div class="money"><input class="form-control" type="text" inputmode="numeric" id="addGoalAmount" name="amount" data-amount data-rule="amount" data-min="100" data-max="248500" data-max-msg="That is more than your balance of ₦248,500.00." required autocomplete="off" data-msg="Enter an amount."></div>
+                <div class="chips" role="group" aria-label="Quick amounts"><button type="button" class="chip" data-amount-set="2000" aria-pressed="false">₦2,000</button><button type="button" class="chip" data-amount-set="5000" aria-pressed="false">₦5,000</button><button type="button" class="chip" data-amount-set="10000" aria-pressed="false">₦10,000</button></div>
+                <div class="invalid-feedback" role="alert"></div>
+                <div class="field__hint">Wallet balance ₦248,500.00</div>
+              </div>
+              <button type="submit" class="btn btn-brand btn-lg"><span class="spinner" aria-hidden="true"></span>Continue<svg class="icon" aria-hidden="true"><use href="#a-arrow"/></svg></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="withdrawGoal" tabindex="-1" aria-labelledby="withdrawGoalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="withdrawGoalTitle">Withdraw to your wallet</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="form-stack" action="#" method="post" novalidate data-pay data-pay-title="Review" data-pay-label="You are moving" data-pay-verb="Withdraw" data-pay-done="Moved to your wallet" data-pay-to-text="your wallet">
+              {% csrf_token %}
+              <div class="field">
+                <label for="outGoal">Target</label>
+                <select class="form-select" id="outGoal" name="goal" data-row="From" required><option value="school">School fees</option><option value="rent">Rent</option></select>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="outGoalAmount">Amount</label>
+                <div class="money"><input class="form-control" type="text" inputmode="numeric" id="outGoalAmount" name="amount" data-amount data-rule="amount" data-min="100" data-max="186000" data-max-msg="You have ₦186,000 in this target." required autocomplete="off" data-msg="Enter an amount."></div>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <button type="submit" class="btn btn-brand btn-lg"><span class="spinner" aria-hidden="true"></span>Continue<svg class="icon" aria-hidden="true"><use href="#a-arrow"/></svg></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

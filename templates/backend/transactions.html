@@ -1,0 +1,94 @@
+{% extends "backend/base.html" %}
+{% load static %}
+{# Figures on this page are sample data until the page is connected to its view. #}
+{% block title %}Activity{% endblock %}
+{% block heading %}Activity{% endblock %}
+{% block sub %}<p class="app-head__sub">Everything that has moved in or out of your wallet.</p>{% endblock %}
+{% block actions %}<button type="button" class="btn btn-ghost" data-soon="Statements are made on the server. Connect this button to your statement view."><svg class="icon" aria-hidden="true"><use href="#a-down"/></svg>Statement</button>{% endblock %}
+
+{% block content %}
+      <div class="stats">
+        <div class="stat"><div class="stat__label">Money in, October</div><div class="stat__value">₦80,000</div><div class="stat__note">1 deposit</div></div>
+        <div class="stat"><div class="stat__label">Money out, October</div><div class="stat__value">₦69,550</div><div class="stat__note">6 payments</div></div>
+        <div class="stat"><div class="stat__label">Fees, October</div><div class="stat__value">₦50</div><div class="stat__note">1 bank transfer</div></div>
+      </div>
+
+      <section class="card-panel" aria-label="Transactions">
+        <div class="filters mb-3">
+          <div class="app-search"><label class="visually-hidden" for="txSearch">Search by name or reference</label><svg class="icon" aria-hidden="true"><use href="#a-search"/></svg>
+            <input type="search" id="txSearch" placeholder="Search by name or reference" maxlength="60"></div>
+          <label class="visually-hidden" for="txPeriod">Period</label>
+          <select class="form-select" id="txPeriod"><option>Last 30 days</option><option>Last 7 days</option><option>This month</option><option>Last month</option><option>This year</option></select>
+        </div>
+        <div class="chips mb-3" id="txFilters" role="group" aria-label="Show">
+          <button type="button" class="chip is-on" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="chip" data-filter="in" aria-pressed="false">Money in</button>
+          <button type="button" class="chip" data-filter="out" aria-pressed="false">Money out</button>
+          <button type="button" class="chip" data-filter="bill" aria-pressed="false">Bills</button>
+          <button type="button" class="chip" data-filter="reversed" aria-pressed="false">Reversed</button>
+        </div>
+
+            <div class="table-scroll">
+              <table class="activity" role="table" id="txTable">
+                <thead role="rowgroup">
+                  <tr role="row"><th role="columnheader" scope="col">Name</th><th role="columnheader" scope="col">Type</th><th role="columnheader" scope="col">Date</th><th role="columnheader" scope="col">Status</th><th role="columnheader" scope="col" class="activity__num">Amount</th></tr>
+                </thead>
+                <tbody role="rowgroup">
+                  <tr role="row" data-kind="transfer" data-dir="out" data-status="Successful" data-name="Chidi Okafor" data-type="Bank transfer" data-when="Today, 10:42" data-amount="-15000" data-fee="50" data-detail="GTBank 0123456789" data-ref="EBP-261008-7731"><td role="cell" class="activity__name"><button type="button" class="activity__open" data-bs-toggle="modal" data-bs-target="#receipt">Chidi Okafor<span class="visually-hidden">, open receipt</span></button></td><td role="cell">Bank transfer</td><td role="cell">Today, 10:42</td><td role="cell"><span class="pill pill--ok">Successful</span></td><td role="cell" class="activity__num mono">−₦15,000</td></tr>
+                  <tr role="row" data-kind="bill" data-dir="out" data-status="Pending" data-name="Airtime top-up" data-type="Airtime" data-when="Today, 08:15" data-amount="-2000" data-fee="0" data-detail="MTN 0803 123 4567" data-ref="EBP-261008-7702"><td role="cell" class="activity__name"><button type="button" class="activity__open" data-bs-toggle="modal" data-bs-target="#receipt">Airtime top-up<span class="visually-hidden">, open receipt</span></button></td><td role="cell">Airtime</td><td role="cell">Today, 08:15</td><td role="cell"><span class="pill pill--wait">Pending</span></td><td role="cell" class="activity__num mono">−₦2,000</td></tr>
+                  <tr role="row" data-kind="deposit" data-dir="in" data-status="Successful" data-name="Tunde Bakare" data-type="Deposit" data-when="Yesterday, 18:03" data-amount="80000" data-fee="0" data-detail="From Access Bank 0098765432" data-ref="EBP-261007-6650"><td role="cell" class="activity__name"><button type="button" class="activity__open" data-bs-toggle="modal" data-bs-target="#receipt">Tunde Bakare<span class="visually-hidden">, open receipt</span></button></td><td role="cell">Deposit</td><td role="cell">Yesterday, 18:03</td><td role="cell"><span class="pill pill--ok">Successful</span></td><td role="cell" class="activity__num mono is-credit">+₦80,000</td></tr>
+                  <tr role="row" data-kind="bill" data-dir="out" data-status="Successful" data-name="Electricity token" data-type="Electricity" data-when="Yesterday, 14:20" data-amount="-10000" data-fee="0" data-detail="Ibadan Electric, meter 45012345678" data-ref="EBP-261007-6614"><td role="cell" class="activity__name"><button type="button" class="activity__open" data-bs-toggle="modal" data-bs-target="#receipt">Electricity token<span class="visually-hidden">, open receipt</span></button></td><td role="cell">Electricity</td><td role="cell">Yesterday, 14:20</td><td role="cell"><span class="pill pill--ok">Successful</span></td><td role="cell" class="activity__num mono">−₦10,000</td></tr>
+                  <tr role="row" data-kind="transfer" data-dir="out" data-status="Reversed" data-name="Ngozi Adeyemi" data-type="Bank transfer" data-when="Yesterday, 09:11" data-amount="-5000" data-fee="0" data-detail="UBA 2087654321" data-ref="EBP-261007-6588"><td role="cell" class="activity__name"><button type="button" class="activity__open" data-bs-toggle="modal" data-bs-target="#receipt">Ngozi Adeyemi<span class="visually-hidden">, open receipt</span></button></td><td role="cell">Bank transfer</td><td role="cell">Yesterday, 09:11</td><td role="cell"><span class="pill ">Reversed</span></td><td role="cell" class="activity__num mono is-struck">−₦5,000</td></tr>
+                  <tr role="row" data-kind="savings" data-dir="out" data-status="Successful" data-name="School fees target" data-type="Savings" data-when="6 Oct, 07:00" data-amount="-20000" data-fee="0" data-detail="Moved to your savings target" data-ref="EBP-261006-5120"><td role="cell" class="activity__name"><button type="button" class="activity__open" data-bs-toggle="modal" data-bs-target="#receipt">School fees target<span class="visually-hidden">, open receipt</span></button></td><td role="cell">Savings</td><td role="cell">6 Oct, 07:00</td><td role="cell"><span class="pill pill--ok">Successful</span></td><td role="cell" class="activity__num mono">−₦20,000</td></tr>
+                  <tr role="row" data-kind="bill" data-dir="out" data-status="Successful" data-name="DStv Compact" data-type="Cable TV" data-when="5 Oct, 19:32" data-amount="-19000" data-fee="0" data-detail="Smartcard 7023456789" data-ref="EBP-261005-4471"><td role="cell" class="activity__name"><button type="button" class="activity__open" data-bs-toggle="modal" data-bs-target="#receipt">DStv Compact<span class="visually-hidden">, open receipt</span></button></td><td role="cell">Cable TV</td><td role="cell">5 Oct, 19:32</td><td role="cell"><span class="pill pill--ok">Successful</span></td><td role="cell" class="activity__num mono">−₦19,000</td></tr>
+                  <tr role="row" data-kind="transfer" data-dir="out" data-status="Successful" data-name="@tunde" data-type="EgoBellPay transfer" data-when="5 Oct, 12:05" data-amount="-3500" data-fee="0" data-detail="Tunde Bakare" data-ref="EBP-261005-4409"><td role="cell" class="activity__name"><button type="button" class="activity__open" data-bs-toggle="modal" data-bs-target="#receipt">@tunde<span class="visually-hidden">, open receipt</span></button></td><td role="cell">EgoBellPay transfer</td><td role="cell">5 Oct, 12:05</td><td role="cell"><span class="pill pill--ok">Successful</span></td><td role="cell" class="activity__num mono">−₦3,500</td></tr>
+                  <tr role="row" data-kind="deposit" data-dir="in" data-status="Successful" data-name="Brightpath Ltd" data-type="Deposit" data-when="30 Sep, 09:00" data-amount="250000" data-fee="0" data-detail="From Zenith Bank 1019876543" data-ref="EBP-260930-2204"><td role="cell" class="activity__name"><button type="button" class="activity__open" data-bs-toggle="modal" data-bs-target="#receipt">Brightpath Ltd<span class="visually-hidden">, open receipt</span></button></td><td role="cell">Deposit</td><td role="cell">30 Sep, 09:00</td><td role="cell"><span class="pill pill--ok">Successful</span></td><td role="cell" class="activity__num mono is-credit">+₦250,000</td></tr>
+                  <tr role="row" data-kind="card" data-dir="out" data-status="Successful" data-name="Online store" data-type="Card payment" data-when="28 Sep, 16:44" data-amount="-12400" data-fee="0" data-detail="Virtual card ending 4821" data-ref="EBP-260928-1873"><td role="cell" class="activity__name"><button type="button" class="activity__open" data-bs-toggle="modal" data-bs-target="#receipt">Online store<span class="visually-hidden">, open receipt</span></button></td><td role="cell">Card payment</td><td role="cell">28 Sep, 16:44</td><td role="cell"><span class="pill pill--ok">Successful</span></td><td role="cell" class="activity__num mono">−₦12,400</td></tr>
+                  <tr role="row" data-kind="bill" data-dir="out" data-status="Failed" data-name="2 GB data bundle" data-type="Data" data-when="27 Sep, 21:10" data-amount="-1200" data-fee="0" data-detail="Airtel 0802 555 0142. You were not charged." data-ref="EBP-260927-1566"><td role="cell" class="activity__name"><button type="button" class="activity__open" data-bs-toggle="modal" data-bs-target="#receipt">2 GB data bundle<span class="visually-hidden">, open receipt</span></button></td><td role="cell">Data</td><td role="cell">27 Sep, 21:10</td><td role="cell"><span class="pill pill--bad">Failed</span></td><td role="cell" class="activity__num mono is-struck">−₦1,200</td></tr>
+                  <tr role="row" data-kind="transfer" data-dir="out" data-status="Successful" data-name="Emeka Nwosu" data-type="Bank transfer" data-when="26 Sep, 11:27" data-amount="-8000" data-fee="50" data-detail="Zenith Bank 1012345678" data-ref="EBP-260926-1190"><td role="cell" class="activity__name"><button type="button" class="activity__open" data-bs-toggle="modal" data-bs-target="#receipt">Emeka Nwosu<span class="visually-hidden">, open receipt</span></button></td><td role="cell">Bank transfer</td><td role="cell">26 Sep, 11:27</td><td role="cell"><span class="pill pill--ok">Successful</span></td><td role="cell" class="activity__num mono">−₦8,000</td></tr>
+                </tbody>
+              </table>
+            </div>
+        <p class="card-panel__empty" id="txEmpty" hidden>Nothing matches. Try another name, or choose "All".</p>
+
+        <div class="pager">
+          <span id="txCount" aria-live="polite">Showing 12 of 12</span>
+          <div class="pager__btns">
+            <button type="button" class="btn btn-ghost btn-sm" disabled>Newer</button>
+            <button type="button" class="btn btn-ghost btn-sm" data-soon="Paging happens on the server. Connect this to your view.">Older</button>
+          </div>
+        </div>
+      </section>
+{% endblock %}
+
+{% block modals %}
+  <div class="modal fade" id="receipt" tabindex="-1" aria-labelledby="receiptTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="receiptTitle">Receipt</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="pay__hero mb-3">
+            <div class="pay__hero-label" data-r="name"></div>
+            <div class="pay__amount" data-r="amount"></div>
+            <div class="mt-2"><span class="pill" data-r="status"></span></div>
+          </div>
+          <dl class="rows">
+            <div class="rows__row"><dt>Type</dt><dd data-r="type"></dd></div>
+            <div class="rows__row"><dt>Details</dt><dd data-r="detail"></dd></div>
+            <div class="rows__row"><dt>Date</dt><dd data-r="when"></dd></div>
+            <div class="rows__row"><dt>Fee</dt><dd data-r="fee"></dd></div>
+            <div class="rows__row align-items-center"><dt>Reference</dt><dd class="d-flex align-items-center gap-2"><span class="mono" data-r="ref"></span>
+              <button type="button" class="icon-btn icon-btn--sm" data-copy="" data-copied="Reference copied" aria-label="Copy reference"><svg class="icon" aria-hidden="true"><use href="#a-copy"/></svg></button></dd></div>
+          </dl>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-ghost" href="{% url 'frontend:support' %}#report">Report a problem</a>
+          <button type="button" class="btn btn-brand" data-print><svg class="icon" aria-hidden="true"><use href="#a-down"/></svg>Save receipt</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

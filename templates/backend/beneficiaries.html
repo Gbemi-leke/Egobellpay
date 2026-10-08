@@ -1,0 +1,108 @@
+{% extends "backend/base.html" %}
+{% load static %}
+{# Figures on this page are sample data until the page is connected to its view. #}
+{% block title %}Saved recipients{% endblock %}
+{% block heading %}Saved recipients{% endblock %}
+{% block sub %}<p class="app-head__sub">People you send to often. Pick one and skip the typing.</p>{% endblock %}
+{% block actions %}<button type="button" class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#addPerson"><svg class="icon" aria-hidden="true"><use href="#a-plus"/></svg>Add recipient</button>{% endblock %}
+
+{% block content %}
+      <section class="card-panel app-narrow" aria-label="Recipients">
+        <div class="app-search mb-3"><label class="visually-hidden" for="peopleSearch">Search recipients</label><svg class="icon" aria-hidden="true"><use href="#a-search"/></svg>
+          <input type="search" id="peopleSearch" class="w-100" placeholder="Search by name, bank or account number" data-people-search="#peopleList" maxlength="60"></div>
+        <ul class="people" id="peopleList">
+          <li class="person" data-removable="Chidi Okafor">
+            <span class="person__av" aria-hidden="true">CO</span>
+            <span class="person__text"><span class="person__name d-block">Chidi Okafor</span><span class="person__meta d-block">GTBank 0123456789</span></span>
+            <span class="person__btns">
+              <a class="btn btn-soft btn-sm" href="{% url 'frontend:send_money' %}?to=chidi"><svg class="icon" aria-hidden="true"><use href="#a-send"/></svg><span>Send</span></a>
+              <button type="button" class="icon-btn icon-btn--sm" data-bs-toggle="modal" data-bs-target="#removeModal" aria-label="Remove Chidi Okafor"><svg class="icon" aria-hidden="true"><use href="#a-trash"/></svg></button>
+            </span>
+          </li>
+          <li class="person" data-removable="Tunde Bakare">
+            <span class="person__av" aria-hidden="true">TB</span>
+            <span class="person__text"><span class="person__name d-block">Tunde Bakare</span><span class="person__meta d-block">Access Bank 0098765432</span></span>
+            <span class="person__btns">
+              <a class="btn btn-soft btn-sm" href="{% url 'frontend:send_money' %}?to=tunde"><svg class="icon" aria-hidden="true"><use href="#a-send"/></svg><span>Send</span></a>
+              <button type="button" class="icon-btn icon-btn--sm" data-bs-toggle="modal" data-bs-target="#removeModal" aria-label="Remove Tunde Bakare"><svg class="icon" aria-hidden="true"><use href="#a-trash"/></svg></button>
+            </span>
+          </li>
+          <li class="person" data-removable="Ngozi Adeyemi">
+            <span class="person__av" aria-hidden="true">NA</span>
+            <span class="person__text"><span class="person__name d-block">Ngozi Adeyemi</span><span class="person__meta d-block">UBA 2087654321</span></span>
+            <span class="person__btns">
+              <a class="btn btn-soft btn-sm" href="{% url 'frontend:send_money' %}?to=ngozi"><svg class="icon" aria-hidden="true"><use href="#a-send"/></svg><span>Send</span></a>
+              <button type="button" class="icon-btn icon-btn--sm" data-bs-toggle="modal" data-bs-target="#removeModal" aria-label="Remove Ngozi Adeyemi"><svg class="icon" aria-hidden="true"><use href="#a-trash"/></svg></button>
+            </span>
+          </li>
+          <li class="person" data-removable="Emeka Nwosu">
+            <span class="person__av" aria-hidden="true">EN</span>
+            <span class="person__text"><span class="person__name d-block">Emeka Nwosu</span><span class="person__meta d-block">Zenith Bank 1012345678</span></span>
+            <span class="person__btns">
+              <a class="btn btn-soft btn-sm" href="{% url 'frontend:send_money' %}?to=emeka"><svg class="icon" aria-hidden="true"><use href="#a-send"/></svg><span>Send</span></a>
+              <button type="button" class="icon-btn icon-btn--sm" data-bs-toggle="modal" data-bs-target="#removeModal" aria-label="Remove Emeka Nwosu"><svg class="icon" aria-hidden="true"><use href="#a-trash"/></svg></button>
+            </span>
+          </li>
+          <li class="person" data-removable="Mama (Folake Okonkwo)">
+            <span class="person__av" aria-hidden="true">FO</span>
+            <span class="person__text"><span class="person__name d-block">Mama (Folake Okonkwo)</span><span class="person__meta d-block">First Bank 3045678912</span></span>
+            <span class="person__btns">
+              <a class="btn btn-soft btn-sm" href="{% url 'frontend:send_money' %}?to=mama"><svg class="icon" aria-hidden="true"><use href="#a-send"/></svg><span>Send</span></a>
+              <button type="button" class="icon-btn icon-btn--sm" data-bs-toggle="modal" data-bs-target="#removeModal" aria-label="Remove Mama (Folake Okonkwo)"><svg class="icon" aria-hidden="true"><use href="#a-trash"/></svg></button>
+            </span>
+          </li>
+        </ul>
+        <p class="card-panel__empty" data-people-empty hidden>No recipient matches that. Check the spelling, or add them as a new recipient.</p>
+      </section>
+{% endblock %}
+
+{% block modals %}
+  <div class="modal fade" id="addPerson" tabindex="-1" aria-labelledby="addPersonTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="addPersonTitle">Add a recipient</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="form-stack" action="#" method="post" novalidate data-form data-success="Recipient saved">
+              {% csrf_token %}
+              <div class="field">
+                <label for="newBank">Bank</label>
+                <select class="form-select" id="newBank" name="bank" data-row="Bank" data-relookup="#newAccount" required data-msg="Choose a bank."><option value="">Choose a bank</option><option value="access">Access Bank</option><option value="fcmb">FCMB</option><option value="fidelity">Fidelity Bank</option><option value="firstbank">First Bank</option><option value="gtbank">GTBank</option><option value="kuda">Kuda</option><option value="moniepoint">Moniepoint</option><option value="opay">OPay</option><option value="palmpay">PalmPay</option><option value="sterling">Sterling Bank</option><option value="uba">UBA</option><option value="wema">Wema Bank</option><option value="zenith">Zenith Bank</option></select>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="newAccount">Account number</label>
+                <input class="form-control mono" type="text" inputmode="numeric" id="newAccount" name="account" data-digits="10" data-rule="account" data-lookup="#newName" data-lookup-with="#newBank" data-lookup-msg="We could not find this account. Check the bank and number." data-name="Kemi Adebayo" required autocomplete="off" data-msg="Enter the 10-digit account number.">
+                <div class="lookup" id="newName" aria-live="polite"><span class="lookup__spin"></span><span class="tick"><svg class="icon" aria-hidden="true"><use href="#a-check"/></svg></span><span data-lookup-text data-row="Account name"></span></div>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="newNick">Nickname <span class="optional">(optional)</span></label>
+                <input class="form-control" type="text" id="newNick" name="nickname" maxlength="30" placeholder="Landlord">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <button type="submit" class="btn btn-brand btn-lg"><span class="spinner" aria-hidden="true"></span>Save recipient</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Confirm before removing something -->
+  <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="removeTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="removeTitle">Remove <span data-remove-name></span>?</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body"><p class="card-panel__text">They will no longer show in your recipients. You can add them again at any time.</p></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Keep</button>
+          <button type="button" class="btn btn-risk" data-remove-confirm>Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

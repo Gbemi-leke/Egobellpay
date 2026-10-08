@@ -1,0 +1,131 @@
+{% extends "backend/base.html" %}
+{% load static %}
+{# Figures on this page are sample data until the page is connected to its view. #}
+{% block title %}Bills and airtime{% endblock %}
+{% block heading %}Bills and airtime{% endblock %}
+{% block sub %}<p class="app-head__sub">Buy airtime and data, pay for power and renew your TV.</p>{% endblock %}
+
+{% block content %}
+      <div class="app-grid app-grid--form">
+        <div class="app-col">
+          <div class="cats" role="tablist" aria-label="What to pay for">
+            <button type="button" class="cat active" id="airtime-tab" data-bs-toggle="pill" data-bs-target="#airtime-pane" role="tab" aria-controls="airtime-pane" aria-selected="true"><svg class="icon" aria-hidden="true"><use href="#a-phone"/></svg>Airtime</button>
+            <button type="button" class="cat" id="data-tab" data-bs-toggle="pill" data-bs-target="#data-pane" role="tab" aria-controls="data-pane" aria-selected="false"><svg class="icon" aria-hidden="true"><use href="#a-data"/></svg>Data</button>
+            <button type="button" class="cat" id="power-tab" data-bs-toggle="pill" data-bs-target="#power-pane" role="tab" aria-controls="power-pane" aria-selected="false"><svg class="icon" aria-hidden="true"><use href="#a-bolt"/></svg>Electricity</button>
+            <button type="button" class="cat" id="tv-tab" data-bs-toggle="pill" data-bs-target="#tv-pane" role="tab" aria-controls="tv-pane" aria-selected="false"><svg class="icon" aria-hidden="true"><use href="#a-tv"/></svg>Cable TV</button>
+          </div>
+
+          <section class="card-panel tab-content" aria-label="Payment details">
+
+            <!-- Airtime -->
+            <form class="tab-pane fade show active form-stack" id="airtime-pane" role="tabpanel" aria-labelledby="airtime-tab" tabindex="0" action="#" method="post" novalidate
+                  data-pay data-pay-title="Review airtime" data-pay-label="You are buying airtime worth" data-pay-verb="Buy" data-pay-done="Airtime sent" data-pay-to="#airPhone">
+              {% csrf_token %}
+              <fieldset>
+                <legend>Network</legend>
+                <div class="tiles" data-required data-msg="Choose a network."><label class="tile"><input type="radio" name="air_network" value="mtn" data-row="Network" data-text="MTN"><span class="tile__body"><span class="tile__badge" aria-hidden="true">M</span>MTN</span></label><label class="tile"><input type="radio" name="air_network" value="airtel" data-row="Network" data-text="Airtel"><span class="tile__body"><span class="tile__badge" aria-hidden="true">A</span>Airtel</span></label><label class="tile"><input type="radio" name="air_network" value="glo" data-row="Network" data-text="Glo"><span class="tile__body"><span class="tile__badge" aria-hidden="true">G</span>Glo</span></label><label class="tile"><input type="radio" name="air_network" value="9mobile" data-row="Network" data-text="9mobile"><span class="tile__body"><span class="tile__badge" aria-hidden="true">9</span>9mobile</span></label></div>
+                <div class="invalid-feedback" role="alert"></div>
+              </fieldset>
+              <div class="field">
+                <label for="airPhone">Phone number</label>
+                <input class="form-control mono" type="tel" inputmode="tel" id="airPhone" name="phone" placeholder="0803 123 4567" data-rule="phone" data-row="Phone number" required autocomplete="tel" data-msg="Enter the phone number to top up.">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="airAmount">Amount</label>
+                <div class="money"><input class="form-control" type="text" inputmode="numeric" id="airAmount" name="amount" data-amount data-rule="amount" data-min="50" data-max="50000" required autocomplete="off" data-msg="Enter an amount."></div>
+                <div class="chips" role="group" aria-label="Quick amounts"><button type="button" class="chip" data-amount-set="100" aria-pressed="false">₦100</button><button type="button" class="chip" data-amount-set="200" aria-pressed="false">₦200</button><button type="button" class="chip" data-amount-set="500" aria-pressed="false">₦500</button><button type="button" class="chip" data-amount-set="1000" aria-pressed="false">₦1,000</button><button type="button" class="chip" data-amount-set="2000" aria-pressed="false">₦2,000</button></div>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <button type="submit" class="btn btn-brand btn-lg"><span class="spinner" aria-hidden="true"></span>Continue<svg class="icon" aria-hidden="true"><use href="#a-arrow"/></svg></button>
+            </form>
+
+            <!-- Data -->
+            <form class="tab-pane fade form-stack" id="data-pane" role="tabpanel" aria-labelledby="data-tab" tabindex="0" action="#" method="post" novalidate
+                  data-pay data-pay-title="Review data bundle" data-pay-label="You are buying data worth" data-pay-verb="Buy" data-pay-done="Data bundle sent" data-pay-to="#dataPhone">
+              {% csrf_token %}
+              <fieldset>
+                <legend>Network</legend>
+                <div class="tiles" data-required data-msg="Choose a network."><label class="tile"><input type="radio" name="data_network" value="mtn" data-row="Network" data-text="MTN"><span class="tile__body"><span class="tile__badge" aria-hidden="true">M</span>MTN</span></label><label class="tile"><input type="radio" name="data_network" value="airtel" data-row="Network" data-text="Airtel"><span class="tile__body"><span class="tile__badge" aria-hidden="true">A</span>Airtel</span></label><label class="tile"><input type="radio" name="data_network" value="glo" data-row="Network" data-text="Glo"><span class="tile__body"><span class="tile__badge" aria-hidden="true">G</span>Glo</span></label><label class="tile"><input type="radio" name="data_network" value="9mobile" data-row="Network" data-text="9mobile"><span class="tile__body"><span class="tile__badge" aria-hidden="true">9</span>9mobile</span></label></div>
+                <div class="invalid-feedback" role="alert"></div>
+              </fieldset>
+              <div class="field">
+                <label for="dataPhone">Phone number</label>
+                <input class="form-control mono" type="tel" inputmode="tel" id="dataPhone" name="phone" placeholder="0803 123 4567" data-rule="phone" data-row="Phone number" required autocomplete="tel" data-msg="Enter the phone number to top up.">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="dataPlan">Bundle</label>
+                <select class="form-select" id="dataPlan" name="plan" data-priced data-row="Bundle" required data-msg="Choose a bundle."><option value="">Choose a bundle</option><option value="1gb" data-price="500">1 GB for 7 days (₦500)</option><option value="2gb" data-price="1200">2 GB for 30 days (₦1,200)</option><option value="5gb" data-price="2500">5 GB for 30 days (₦2,500)</option><option value="10gb" data-price="4500">10 GB for 30 days (₦4,500)</option><option value="20gb" data-price="7500">20 GB for 30 days (₦7,500)</option></select>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <button type="submit" class="btn btn-brand btn-lg"><span class="spinner" aria-hidden="true"></span>Continue<svg class="icon" aria-hidden="true"><use href="#a-arrow"/></svg></button>
+            </form>
+
+            <!-- Electricity -->
+            <form class="tab-pane fade form-stack" id="power-pane" role="tabpanel" aria-labelledby="power-tab" tabindex="0" action="#" method="post" novalidate
+                  data-pay data-pay-token data-pay-title="Review electricity" data-pay-label="You are paying" data-pay-verb="Pay" data-pay-done="Token ready" data-pay-to="#meterName [data-lookup-text]">
+              {% csrf_token %}
+              <div class="field">
+                <label for="powerDisco">Electricity company</label>
+                <select class="form-select" id="powerDisco" name="disco" data-row="Company" data-relookup="#powerMeter" required data-msg="Choose your electricity company."><option value="">Choose a company</option><option value="ibedc">Ibadan Electric (IBEDC)</option><option value="ikeja">Ikeja Electric</option><option value="eko">Eko Electric</option><option value="abuja">Abuja Electric</option><option value="enugu">Enugu Electric</option><option value="ph">Port Harcourt Electric</option></select>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <fieldset>
+                <legend>Meter type</legend>
+                <div class="tiles tiles--2" data-required data-msg="Choose prepaid or postpaid."><label class="tile"><input type="radio" name="meter_type" value="prepaid" data-row="Meter type" data-text="Prepaid"><span class="tile__body">Prepaid</span></label><label class="tile"><input type="radio" name="meter_type" value="postpaid" data-row="Meter type" data-text="Postpaid"><span class="tile__body">Postpaid</span></label></div>
+                <div class="invalid-feedback" role="alert"></div>
+              </fieldset>
+              <div class="field">
+                <label for="powerMeter">Meter number</label>
+                <input class="form-control mono" type="text" inputmode="numeric" id="powerMeter" name="meter" data-digits="13" data-rule="meter" data-lookup="#meterName" data-lookup-min="11" data-lookup-with="#powerDisco" data-lookup-msg="We could not find this meter. Check the company and number." data-name="{{ user.get_full_name }}, 14 Quarry Road" data-row="Meter number" required autocomplete="off" data-msg="Enter your meter number.">
+                <div class="lookup" id="meterName" aria-live="polite"><span class="lookup__spin"></span><span class="tick"><svg class="icon" aria-hidden="true"><use href="#a-check"/></svg></span><span data-lookup-text data-row="Customer"></span></div>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="powerAmount">Amount</label>
+                <div class="money"><input class="form-control" type="text" inputmode="numeric" id="powerAmount" name="amount" data-amount data-rule="amount" data-min="1000" data-max="200000" required autocomplete="off" data-msg="Enter an amount."></div>
+                <div class="chips" role="group" aria-label="Quick amounts"><button type="button" class="chip" data-amount-set="2000" aria-pressed="false">₦2,000</button><button type="button" class="chip" data-amount-set="5000" aria-pressed="false">₦5,000</button><button type="button" class="chip" data-amount-set="10000" aria-pressed="false">₦10,000</button><button type="button" class="chip" data-amount-set="20000" aria-pressed="false">₦20,000</button></div>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <button type="submit" class="btn btn-brand btn-lg"><span class="spinner" aria-hidden="true"></span>Continue<svg class="icon" aria-hidden="true"><use href="#a-arrow"/></svg></button>
+            </form>
+
+            <!-- Cable TV -->
+            <form class="tab-pane fade form-stack" id="tv-pane" role="tabpanel" aria-labelledby="tv-tab" tabindex="0" action="#" method="post" novalidate
+                  data-pay data-pay-title="Review TV subscription" data-pay-label="You are paying" data-pay-verb="Pay" data-pay-done="Subscription renewed" data-pay-to="#tvName [data-lookup-text]">
+              {% csrf_token %}
+              <fieldset>
+                <legend>Provider</legend>
+                <div class="tiles tiles--3" data-required data-msg="Choose a provider."><label class="tile"><input type="radio" name="tv_provider" value="dstv" data-row="Provider" data-text="DStv"><span class="tile__body"><span class="tile__badge" aria-hidden="true">D</span>DStv</span></label><label class="tile"><input type="radio" name="tv_provider" value="gotv" data-row="Provider" data-text="GOtv"><span class="tile__body"><span class="tile__badge" aria-hidden="true">G</span>GOtv</span></label><label class="tile"><input type="radio" name="tv_provider" value="startimes" data-row="Provider" data-text="StarTimes"><span class="tile__body"><span class="tile__badge" aria-hidden="true">S</span>StarTimes</span></label></div>
+                <div class="invalid-feedback" role="alert"></div>
+              </fieldset>
+              <div class="field">
+                <label for="tvCard">Smartcard or IUC number</label>
+                <input class="form-control mono" type="text" inputmode="numeric" id="tvCard" name="smartcard" data-digits="11" data-rule="smartcard" data-lookup="#tvName" data-lookup-min="10" data-lookup-msg="We could not find this smartcard. Check the provider and number." data-name="{{ user.get_full_name }}" data-row="Smartcard" required autocomplete="off" data-msg="Enter the number on your decoder.">
+                <div class="lookup" id="tvName" aria-live="polite"><span class="lookup__spin"></span><span class="tick"><svg class="icon" aria-hidden="true"><use href="#a-check"/></svg></span><span data-lookup-text data-row="Customer"></span></div>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="tvPlan">Package</label>
+                <select class="form-select" id="tvPlan" name="plan" data-priced data-row="Package" required data-msg="Choose a package."><option value="">Choose a package</option><option value="basic" data-price="3700">Basic, 1 month (₦3,700)</option><option value="smart" data-price="5800">Smart, 1 month (₦5,800)</option><option value="compact" data-price="19000">Compact, 1 month (₦19,000)</option><option value="premium" data-price="44500">Premium, 1 month (₦44,500)</option></select>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <button type="submit" class="btn btn-brand btn-lg"><span class="spinner" aria-hidden="true"></span>Continue<svg class="icon" aria-hidden="true"><use href="#a-arrow"/></svg></button>
+            </form>
+          </section>
+        </div>
+
+        <div class="app-col">
+          <section class="card-panel" aria-labelledby="recentBills">
+            <div class="card-panel__head"><h2 class="card-panel__title card-panel__title--sm" id="recentBills">Recent bills</h2><a class="card-panel__link" href="{% url 'frontend:transactions' %}">See all</a></div>
+            <ul class="people">
+              <li class="person"><span class="person__av" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#a-phone"/></svg></span><span class="person__text"><span class="person__name d-block">MTN airtime</span><span class="person__meta d-block">0803 123 4567, today</span></span><span class="mono">−₦2,000</span></li>
+              <li class="person"><span class="person__av" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#a-bolt"/></svg></span><span class="person__text"><span class="person__name d-block">Ibadan Electric</span><span class="person__meta d-block">Meter 45012345678, yesterday</span></span><span class="mono">−₦10,000</span></li>
+              <li class="person"><span class="person__av" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#a-tv"/></svg></span><span class="person__text"><span class="person__name d-block">DStv Compact</span><span class="person__meta d-block">Smartcard 7023456789, 5 Oct</span></span><span class="mono">−₦19,000</span></li>
+            </ul>
+          </section>
+          <p class="notice notice--plain"><svg class="icon" aria-hidden="true"><use href="#a-info"/></svg><span>If a payment fails, the money goes back to your wallet automatically. Electricity tokens are also sent to you by SMS.</span></p>
+        </div>
+      </div>
+{% endblock %}

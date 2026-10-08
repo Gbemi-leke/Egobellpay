@@ -1,0 +1,307 @@
+{% extends "backend/base.html" %}
+{% load static %}
+{# Figures on this page are sample data until the page is connected to its view. #}
+{% block title %}Settings{% endblock %}
+{% block heading %}Settings{% endblock %}
+
+{% block content %}
+      <div class="settings">
+        <div class="side-tabs" role="tablist" aria-label="Settings sections">
+          <button type="button" class="nav-link active" id="profile-tab" data-bs-toggle="pill" data-bs-target="#profile-pane" role="tab" aria-controls="profile-pane" aria-selected="true"><svg class="icon" aria-hidden="true"><use href="#a-user"/></svg>Profile</button>
+          <button type="button" class="nav-link" id="security-tab" data-bs-toggle="pill" data-bs-target="#security-pane" role="tab" aria-controls="security-pane" aria-selected="false"><svg class="icon" aria-hidden="true"><use href="#a-lock"/></svg>Password and PIN</button>
+          <button type="button" class="nav-link" id="verify-tab" data-bs-toggle="pill" data-bs-target="#verify-pane" role="tab" aria-controls="verify-pane" aria-selected="false"><svg class="icon" aria-hidden="true"><use href="#a-shield"/></svg>Identity and limits</button>
+          <button type="button" class="nav-link" id="alerts-tab" data-bs-toggle="pill" data-bs-target="#alerts-pane" role="tab" aria-controls="alerts-pane" aria-selected="false"><svg class="icon" aria-hidden="true"><use href="#a-bell"/></svg>Alerts</button>
+        </div>
+
+        <div class="tab-content">
+
+          <!-- Profile -->
+          <div class="tab-pane fade show active" id="profile-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+            <section class="card-panel">
+              <div class="card-panel__head"><h2 class="card-panel__title">Profile</h2></div>
+              <form class="form-stack" action="#" method="post" novalidate data-form data-keep data-success="Profile saved.">
+              {% csrf_token %}
+                <div class="form-row">
+              <div class="field">
+                <label for="pfFirst">First name</label>
+                <input class="form-control" type="text" id="pfFirst" value="{{ user.first_name }}" readonly>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="pfLast">Last name</label>
+                <input class="form-control" type="text" id="pfLast" value="{{ user.last_name }}" readonly>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+                </div>
+                <p class="notice notice--plain"><svg class="icon" aria-hidden="true"><use href="#a-info"/></svg><span>Your name comes from your BVN, so it cannot be edited here. If it is wrong, <a class="text-link" href="{% url 'frontend:support' %}">contact support</a>.</span></p>
+                <div class="form-row">
+              <div class="field">
+                <label for="pfEmail">Email</label>
+                <input class="form-control" type="email" id="pfEmail" name="email" value="{{ user.email }}" data-rule="email" required autocomplete="email">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="pfPhone">Phone number</label>
+                <input class="form-control" type="tel" id="pfPhone" name="phone" value="{{ user.phone }}" data-rule="phone" required autocomplete="tel">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+                </div>
+              <div class="field">
+                <label for="pfTag">EgoBellPay tag</label>
+                <input class="form-control" type="text" id="pfTag" name="tag" value="{% if user.tag %}@{{ user.tag }}{% endif %}" placeholder="@yourname" data-rule="tag" required autocapitalize="none" spellcheck="false">
+                <div class="invalid-feedback" role="alert"></div>
+                <div class="field__hint">People can send you money with this instead of your account number.</div>
+              </div>
+              <div class="field">
+                <label for="pfAddress">Home address</label>
+                <input class="form-control" type="text" id="pfAddress" name="address" value="" placeholder="House number, street, town, state" required autocomplete="street-address">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+                <div><button type="submit" class="btn btn-brand"><span class="spinner" aria-hidden="true"></span>Save changes</button></div>
+                <div class="form-status" role="status"></div>
+              </form>
+            </section>
+          </div>
+
+          <!-- Password and PIN -->
+          <div class="tab-pane fade" id="security-pane" role="tabpanel" aria-labelledby="security-tab" tabindex="0">
+            <div class="app-col">
+              <section class="card-panel">
+                <div class="card-panel__head"><h2 class="card-panel__title">Password</h2></div>
+                <form class="form-stack" action="#" method="post" novalidate data-form data-success="Password changed. Other devices have been signed out.">
+              {% csrf_token %}
+              <div class="field">
+                <label for="pwNow">Current password</label>
+                <div class="pw"><input class="form-control" type="password" id="pwNow" name="current" required autocomplete="current-password" data-msg="Enter your current password."><button type="button" class="pw__toggle" aria-pressed="false" aria-label="Show or hide password">Show</button></div>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+                  <div class="form-row">
+              <div class="field">
+                <label for="pwNew">New password</label>
+                <div class="pw"><input class="form-control" type="password" id="pwNew" name="new" data-rule="password" required autocomplete="new-password" data-msg="Choose a new password."><button type="button" class="pw__toggle" aria-pressed="false" aria-label="Show or hide password">Show</button></div>
+                <div class="invalid-feedback" role="alert"></div>
+                <div class="field__hint">At least 8 characters, with a letter and a number.</div>
+              </div>
+              <div class="field">
+                <label for="pwAgain">New password again</label>
+                <input class="form-control" type="password" id="pwAgain" name="again" data-match="#pwNew" required autocomplete="new-password" data-msg="Type the new password again.">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+                  </div>
+                  <div><button type="submit" class="btn btn-brand"><span class="spinner" aria-hidden="true"></span>Change password</button></div>
+                  <div class="form-status" role="status"></div>
+                </form>
+              </section>
+
+              <section class="card-panel">
+                <div class="card-panel__head"><h2 class="card-panel__title">Transaction PIN</h2></div>
+                <p class="card-panel__text mb-3">You enter this 4-digit PIN to approve every payment.</p>
+                <form class="form-stack" action="#" method="post" novalidate data-form data-success="PIN changed.">
+              {% csrf_token %}
+              <div class="field">
+                <span class="field__label" id="pinNowLabel">Current PIN</span>
+                <div class="pin" id="pinNow" role="group" aria-labelledby="pinNowLabel"><input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Current PIN, digit 1"><input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Current PIN, digit 2"><input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Current PIN, digit 3"><input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Current PIN, digit 4"></div>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <span class="field__label" id="pinNewLabel">New PIN</span>
+                <div class="pin" id="pinNew" role="group" aria-labelledby="pinNewLabel"><input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="New PIN, digit 1"><input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="New PIN, digit 2"><input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="New PIN, digit 3"><input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="New PIN, digit 4"></div>
+                <div class="invalid-feedback" role="alert"></div>
+                <div class="field__hint">Avoid 1234, 0000 or your birth year.</div>
+              </div>
+              <div class="field">
+                <span class="field__label" id="pinAgainLabel">New PIN again</span>
+                <div class="pin" id="pinAgain" role="group" aria-labelledby="pinAgainLabel" data-match="#pinNew"><input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="New PIN again, digit 1"><input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="New PIN again, digit 2"><input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="New PIN again, digit 3"><input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="New PIN again, digit 4"></div>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+                  <div class="d-flex flex-wrap align-items-center gap-3"><button type="submit" class="btn btn-brand"><span class="spinner" aria-hidden="true"></span>Change PIN</button>
+                    <button type="button" class="btn btn-link text-link p-0" data-soon="Connect this to your PIN reset: send a code to the phone on file, then let them choose a new PIN.">Forgot your PIN?</button></div>
+                  <div class="form-status" role="status"></div>
+                </form>
+              </section>
+
+              <section class="card-panel">
+                <div class="card-panel__head"><h2 class="card-panel__title">Signing in</h2></div>
+                <div class="set-list">
+              <div class="set-row">
+                <div class="set-row__text"><label class="set-row__title d-block" for="twoStep">Code by SMS when you sign in</label><div class="set-row__note">We text a 6-digit code to {{ user.phone }} each time.</div></div>
+                <div class="form-check form-switch m-0 p-0"><input class="form-check-input m-0" type="checkbox" role="switch" id="twoStep" name="twoStep" checked></div>
+              </div>
+              <div class="set-row">
+                <div class="set-row__text"><label class="set-row__title d-block" for="newDevice">Alert me about new devices</label><div class="set-row__note">An email and SMS whenever your account is opened somewhere new.</div></div>
+                <div class="form-check form-switch m-0 p-0"><input class="form-check-input m-0" type="checkbox" role="switch" id="newDevice" name="newDevice" checked></div>
+              </div>
+                </div>
+              </section>
+
+              <section class="card-panel">
+                <div class="card-panel__head"><h2 class="card-panel__title">Where you are signed in</h2></div>
+                <div class="set-list">
+              <div class="set-row" data-removable="Chrome on Windows">
+                <div class="set-row__text"><div class="set-row__title">Chrome on Windows</div><div class="set-row__note">Abeokuta, active now</div></div><span class="pill pill--ok">This device</span>
+              </div>
+              <div class="set-row" data-removable="Tecno Camon 20">
+                <div class="set-row__text"><div class="set-row__title">Tecno Camon 20</div><div class="set-row__note">Abeokuta, yesterday at 08:40</div></div><button type="button" class="btn btn-ghost btn-sm" data-bs-toggle="modal" data-bs-target="#removeModal">Sign out<span class="visually-hidden"> of Tecno Camon 20</span></button>
+              </div>
+              <div class="set-row" data-removable="Safari on iPhone">
+                <div class="set-row__text"><div class="set-row__title">Safari on iPhone</div><div class="set-row__note">Lagos, 29 September</div></div><button type="button" class="btn btn-ghost btn-sm" data-bs-toggle="modal" data-bs-target="#removeModal">Sign out<span class="visually-hidden"> of Safari on iPhone</span></button>
+              </div>
+                </div>
+                <button type="button" class="btn btn-risk mt-3" data-soon="Connect this to a view that ends every other session for this user.">Sign out everywhere else</button>
+              </section>
+            </div>
+          </div>
+
+          <!-- Identity and limits -->
+          <div class="tab-pane fade" id="verify-pane" role="tabpanel" aria-labelledby="verify-tab" tabindex="0">
+            <div class="app-col">
+              <section class="card-panel">
+                <div class="card-panel__head"><h2 class="card-panel__title">Your limits</h2></div>
+                <div class="tiers">
+                  <div class="tier is-done"><span class="tier__num">1</span><div><div class="tier__name">Phone and BVN</div><div class="tier__limits">Send up to ₦50,000 a day. Hold up to ₦300,000.</div></div><span class="pill pill--ok">Done</span></div>
+                  <div class="tier is-current"><span class="tier__num">2</span><div><div class="tier__name">NIN and selfie</div><div class="tier__limits">Send up to ₦200,000 a day. Hold up to ₦500,000.</div></div><span class="pill pill--ok">Your level</span></div>
+                  <div class="tier"><span class="tier__num">3</span><div><div class="tier__name">ID card and proof of address</div><div class="tier__limits">Send up to ₦5,000,000 a day. No limit on your balance.</div></div><span class="pill pill--plain">Not yet</span></div>
+                </div>
+              </section>
+
+              <section class="card-panel">
+                <div class="card-panel__head"><h2 class="card-panel__title">Move up to level 3</h2></div>
+                <p class="card-panel__text mb-3">Send us these two documents. We check them within one working day.</p>
+                <form class="form-stack" action="#" method="post" enctype="multipart/form-data" novalidate data-form data-success="Documents sent. We will email you when they have been checked.">
+              {% csrf_token %}
+                  <div class="form-row">
+              <div class="field">
+                <label for="idType">ID type</label>
+                <select class="form-select" id="idType" name="id_type" required data-msg="Choose the ID you are sending."><option value="">Choose an ID</option><option>National ID card</option><option>International passport</option><option>Driver&#39;s licence</option><option>Voter&#39;s card</option></select>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="idNumber">ID number</label>
+                <input class="form-control mono" type="text" id="idNumber" name="id_number" required autocomplete="off" data-msg="Enter the number on your ID.">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+                  </div>
+              <div class="field">
+                <span class="field__label">Photo of your ID</span>
+                <label class="upload">
+                  <span class="upload__icon"><svg class="icon" aria-hidden="true"><use href="#a-upload"/></svg></span>
+                  <span class="upload__text"><span class="upload__title">Choose a file</span><span class="upload__meta">JPG, PNG or PDF, up to 5 MB</span></span>
+                  <input type="file" id="idFile" name="idFile" accept=".jpg,.jpeg,.png,.pdf" required aria-label="Photo of your ID">
+                  <button type="button" class="upload__clear">Remove</button>
+                </label>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <span class="field__label">Proof of address</span>
+                <label class="upload">
+                  <span class="upload__icon"><svg class="icon" aria-hidden="true"><use href="#a-upload"/></svg></span>
+                  <span class="upload__text"><span class="upload__title">Choose a file</span><span class="upload__meta">A utility bill or bank statement from the last 3 months</span></span>
+                  <input type="file" id="addressFile" name="addressFile" accept=".jpg,.jpeg,.png,.pdf" required aria-label="Proof of address">
+                  <button type="button" class="upload__clear">Remove</button>
+                </label>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+                  <div><button type="submit" class="btn btn-brand"><span class="spinner" aria-hidden="true"></span>Send documents</button></div>
+                  <div class="form-status" role="status"></div>
+                </form>
+              </section>
+
+              <section class="card-panel">
+                <div class="card-panel__head"><h2 class="card-panel__title">Business documents</h2><span class="pill pill--plain">Business accounts only</span></div>
+                <p class="card-panel__text mb-3">Registered businesses add their CAC documents here to get a business account.</p>
+                <form class="form-stack" action="#" method="post" enctype="multipart/form-data" novalidate data-form data-success="Business documents sent. We will email you when they have been checked.">
+              {% csrf_token %}
+              <div class="field">
+                <label for="rcNumber">CAC registration number</label>
+                <input class="form-control mono" type="text" id="rcNumber" name="rc_number" placeholder="RC 1234567" required autocomplete="off" data-msg="Enter the number on your CAC certificate.">
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <span class="field__label">CAC certificate</span>
+                <label class="upload">
+                  <span class="upload__icon"><svg class="icon" aria-hidden="true"><use href="#a-upload"/></svg></span>
+                  <span class="upload__text"><span class="upload__title">Choose a file</span><span class="upload__meta">JPG, PNG or PDF, up to 5 MB</span></span>
+                  <input type="file" id="cacCert" name="cacCert" accept=".jpg,.jpeg,.png,.pdf" required aria-label="CAC certificate">
+                  <button type="button" class="upload__clear">Remove</button>
+                </label>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <span class="field__label">CAC status report <span class="optional">(optional)</span></span>
+                <label class="upload">
+                  <span class="upload__icon"><svg class="icon" aria-hidden="true"><use href="#a-upload"/></svg></span>
+                  <span class="upload__text"><span class="upload__title">Choose a file</span><span class="upload__meta">Shows the directors and shareholders. JPG, PNG or PDF, up to 5 MB</span></span>
+                  <input type="file" id="cacStatus" name="cacStatus" accept=".jpg,.jpeg,.png,.pdf" aria-label="CAC status report">
+                  <button type="button" class="upload__clear">Remove</button>
+                </label>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+                  <div><button type="submit" class="btn btn-brand"><span class="spinner" aria-hidden="true"></span>Send business documents</button></div>
+                  <div class="form-status" role="status"></div>
+                </form>
+              </section>
+            </div>
+          </div>
+
+          <!-- Alerts -->
+          <div class="tab-pane fade" id="alerts-pane" role="tabpanel" aria-labelledby="alerts-tab" tabindex="0">
+            <div class="app-col">
+              <section class="card-panel">
+                <div class="card-panel__head"><h2 class="card-panel__title">Alerts</h2></div>
+                <form action="#" method="post" data-form data-keep data-toast data-success="Alert settings saved">
+              {% csrf_token %}
+                  <div class="set-list mb-3">
+              <div class="set-row">
+                <div class="set-row__text"><label class="set-row__title d-block" for="alIn">Money in</label><div class="set-row__note">When someone pays you.</div></div>
+                <div class="form-check form-switch m-0 p-0"><input class="form-check-input m-0" type="checkbox" role="switch" id="alIn" name="alIn" checked></div>
+              </div>
+              <div class="set-row">
+                <div class="set-row__text"><label class="set-row__title d-block" for="alOut">Money out</label><div class="set-row__note">Every transfer, bill and card payment.</div></div>
+                <div class="form-check form-switch m-0 p-0"><input class="form-check-input m-0" type="checkbox" role="switch" id="alOut" name="alOut" checked></div>
+              </div>
+              <div class="set-row">
+                <div class="set-row__text"><label class="set-row__title d-block" for="alLow">Low balance</label><div class="set-row__note">When your wallet drops below ₦1,000.</div></div>
+                <div class="form-check form-switch m-0 p-0"><input class="form-check-input m-0" type="checkbox" role="switch" id="alLow" name="alLow"></div>
+              </div>
+              <div class="set-row">
+                <div class="set-row__text"><label class="set-row__title d-block" for="alEmail">Email copies</label><div class="set-row__note">Also send each alert to {{ user.email }}.</div></div>
+                <div class="form-check form-switch m-0 p-0"><input class="form-check-input m-0" type="checkbox" role="switch" id="alEmail" name="alEmail" checked></div>
+              </div>
+              <div class="set-row">
+                <div class="set-row__text"><label class="set-row__title d-block" for="alNews">News and offers</label><div class="set-row__note">New features and occasional rewards.</div></div>
+                <div class="form-check form-switch m-0 p-0"><input class="form-check-input m-0" type="checkbox" role="switch" id="alNews" name="alNews"></div>
+              </div>
+                  </div>
+              <button type="submit" class="btn btn-brand"><span class="spinner" aria-hidden="true"></span>Save alert settings</button>
+                </form>
+              </section>
+
+              <section class="card-panel">
+                <div class="card-panel__head"><h2 class="card-panel__title">Close your account</h2></div>
+                <p class="card-panel__text mb-3">Move your money out first. Closing cannot be undone, and we keep your records for as long as the law requires.</p>
+                <a class="btn btn-risk" href="{% url 'frontend:support' %}#report">Ask to close my account</a>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endblock %}
+
+{% block modals %}
+  <!-- Confirm before removing something -->
+  <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="removeTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="removeTitle">Remove <span data-remove-name></span>?</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body"><p class="card-panel__text">That device will be signed out and will need your password to get back in.</p></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Keep</button>
+          <button type="button" class="btn btn-risk" data-remove-confirm>Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

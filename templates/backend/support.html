@@ -1,0 +1,82 @@
+{% extends "backend/base.html" %}
+{% load static %}
+{# Figures on this page are sample data until the page is connected to its view. #}
+{% block title %}Help{% endblock %}
+{% block heading %}Help{% endblock %}
+{% block sub %}<p class="app-head__sub">Answers to common questions, and a real person when you need one.</p>{% endblock %}
+
+{% block content %}
+      <div class="contact-cards">
+        <a class="shortcut" href="https://wa.me/2348140000105" target="_blank" rel="noopener"><span class="shortcut__icon"><svg class="icon" aria-hidden="true"><use href="#a-chat"/></svg></span><span>Chat on WhatsApp<span class="d-block small-text muted fw-normal">Replies in minutes, 8am to 8pm</span></span></a>
+        <a class="shortcut" href="mailto:support@egobellpay.ng"><span class="shortcut__icon"><svg class="icon" aria-hidden="true"><use href="#a-mail"/></svg></span><span>Email us<span class="d-block small-text muted fw-normal">support@egobellpay.ng</span></span></a>
+        <a class="shortcut" href="tel:+2348140000105"><span class="shortcut__icon"><svg class="icon" aria-hidden="true"><use href="#a-call"/></svg></span><span>Call us<span class="d-block small-text muted fw-normal">0814 000 0105</span></span></a>
+      </div>
+
+      <div class="app-grid">
+        <div class="app-col">
+          <section class="card-panel" aria-labelledby="faqTitle">
+            <div class="card-panel__head"><h2 class="card-panel__title" id="faqTitle">Common questions</h2></div>
+            <div class="accordion accordion-flush" id="faq">
+            <div class="accordion-item">
+              <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq0" aria-expanded="true" aria-controls="faq0">My transfer shows as pending. What now?</button></h3>
+              <div id="faq0" class="accordion-collapse collapse show" data-bs-parent="#faq"><div class="accordion-body">Most pending transfers finish within a few minutes. If the other bank does not confirm within 24 hours, the money returns to your wallet automatically and the transaction shows as reversed.</div></div>
+            </div>
+            <div class="accordion-item">
+              <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="false" aria-controls="faq1">I sent money to the wrong account.</button></h3>
+              <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body">Report it straight away with the reference from your receipt. We contact the other bank to ask for the money back. Recovery depends on the other bank and on whether the money is still in that account.</div></div>
+            </div>
+            <div class="accordion-item">
+              <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">I paid for electricity but got no token.</button></h3>
+              <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body">Open the transaction in Activity. The token is on the receipt and is also sent by SMS. If the payment failed, your wallet is refunded automatically.</div></div>
+            </div>
+            <div class="accordion-item">
+              <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">How do I raise my daily limit?</button></h3>
+              <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body">Go to Settings, then Identity and limits. Each level you complete raises how much you can send and hold.</div></div>
+            </div>
+            <div class="accordion-item">
+              <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">I forgot my PIN.</button></h3>
+              <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body">Go to Settings, then Password and PIN, and choose "Forgot your PIN?". We send a code to your phone number before you set a new one.</div></div>
+            </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="app-col">
+          <section class="card-panel" id="report" aria-labelledby="reportTitle">
+            <div class="card-panel__head"><h2 class="card-panel__title" id="reportTitle">Report a problem</h2></div>
+            <form class="form-stack" action="#" method="post" enctype="multipart/form-data" novalidate data-form data-success="Report sent. We will reply by email within one working day.">
+              {% csrf_token %}
+              <div class="field">
+                <label for="repType">What is it about?</label>
+                <select class="form-select" id="repType" name="type" required data-msg="Choose what the problem is about."><option value="">Choose one</option><option>A transfer</option><option>A bill or airtime payment</option><option>My card</option><option>Signing in</option><option>Closing my account</option><option>Something else</option></select>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="repRef">Transaction reference <span class="optional">(optional)</span></label>
+                <input class="form-control mono" type="text" id="repRef" name="reference" placeholder="EBP-261008-7731" autocomplete="off">
+                <div class="invalid-feedback" role="alert"></div>
+                <div class="field__hint">It is on the receipt, under Activity.</div>
+              </div>
+              <div class="field">
+                <label for="repText">What happened?</label>
+                <textarea class="form-control" id="repText" name="details" maxlength="1000" required data-msg="Tell us what happened."></textarea>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="field">
+                <span class="field__label">Screenshot <span class="optional">(optional)</span></span>
+                <label class="upload">
+                  <span class="upload__icon"><svg class="icon" aria-hidden="true"><use href="#a-upload"/></svg></span>
+                  <span class="upload__text"><span class="upload__title">Choose a file</span><span class="upload__meta">JPG, PNG or PDF, up to 5 MB</span></span>
+                  <input type="file" id="repFile" name="repFile" accept=".jpg,.jpeg,.png,.pdf" aria-label="Screenshot">
+                  <button type="button" class="upload__clear">Remove</button>
+                </label>
+                <div class="invalid-feedback" role="alert"></div>
+              </div>
+              <button type="submit" class="btn btn-brand btn-lg"><span class="spinner" aria-hidden="true"></span>Send report</button>
+              <div class="form-status" role="status"></div>
+            </form>
+          </section>
+          <p class="notice"><svg class="icon" aria-hidden="true"><use href="#a-shield"/></svg><span>Support will never ask for your password, PIN or card security code.</span></p>
+        </div>
+      </div>
+{% endblock %}

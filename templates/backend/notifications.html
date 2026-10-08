@@ -1,0 +1,26 @@
+{% extends "backend/base.html" %}
+{% load static %}
+{# Figures on this page are sample data until the page is connected to its view. #}
+{% block title %}Notifications{% endblock %}
+{% block heading %}Notifications{% endblock %}
+{% block actions %}<button type="button" class="btn btn-ghost" data-read-all><svg class="icon" aria-hidden="true"><use href="#a-check"/></svg>Mark all as read</button>{% endblock %}
+
+{% block content %}
+      <section class="card-panel app-narrow" aria-labelledby="newNotes">
+        <div class="card-panel__head"><h2 class="card-panel__title card-panel__title--sm" id="newNotes">This week</h2><a class="card-panel__link" href="{% url 'frontend:settings' %}#alerts">Choose what you get</a></div>
+        <ul class="notes">
+          <li class="note is-unread"><span class="note__icon"><svg class="icon" aria-hidden="true"><use href="#a-plus"/></svg></span><div class="note__text"><div class="note__title">Money received</div><div class="note__body">Tunde Bakare sent you ₦80,000.00.</div><div class="note__time">Yesterday, 18:03</div></div><span class="note__dot" data-unread><span class="visually-hidden">Unread</span></span></li>
+          <li class="note is-unread"><span class="note__icon"><svg class="icon" aria-hidden="true"><use href="#a-shield"/></svg></span><div class="note__text"><div class="note__title">New sign-in</div><div class="note__body">Your account was opened on a Tecno Camon 20 in Abeokuta.</div><div class="note__time">Yesterday, 08:40</div></div><span class="note__dot" data-unread><span class="visually-hidden">Unread</span></span></li>
+          <li class="note"><span class="note__icon"><svg class="icon" aria-hidden="true"><use href="#a-target"/></svg></span><div class="note__text"><div class="note__title">Auto-save done</div><div class="note__body">₦5,000.00 moved to School fees.</div><div class="note__time">Fri 2 Oct, 07:00</div></div><span class="note__dot"></span></li>
+        </ul>
+      </section>
+      <section class="card-panel app-narrow" aria-labelledby="oldNotes">
+        <div class="card-panel__head"><h2 class="card-panel__title card-panel__title--sm" id="oldNotes">Earlier</h2></div>
+        <ul class="notes">
+          <li class="note"><span class="note__icon"><svg class="icon" aria-hidden="true"><use href="#a-bill"/></svg></span><div class="note__text"><div class="note__title">Subscription renewed</div><div class="note__body">DStv Compact is active until 4 November.</div><div class="note__time">Mon 5 Oct, 19:32</div></div><span class="note__dot"></span></li>
+          <li class="note"><span class="note__icon"><svg class="icon" aria-hidden="true"><use href="#a-card"/></svg></span><div class="note__text"><div class="note__title">Card payment</div><div class="note__body">₦12,400.00 paid to Online store with your virtual card.</div><div class="note__time">Mon 28 Sep, 16:44</div></div><span class="note__dot"></span></li>
+          <li class="note"><span class="note__icon"><svg class="icon" aria-hidden="true"><use href="#a-info"/></svg></span><div class="note__text"><div class="note__title">Payment failed, nothing charged</div><div class="note__body">Your 2 GB data bundle did not go through. Your wallet was not charged.</div><div class="note__time">Sun 27 Sep, 21:10</div></div><span class="note__dot"></span></li>
+          <li class="note"><span class="note__icon"><svg class="icon" aria-hidden="true"><use href="#a-gift"/></svg></span><div class="note__text"><div class="note__title">Reward paid</div><div class="note__body">Segun Alabi made a first transfer. ₦500.00 was added to your wallet.</div><div class="note__time">Thu 24 Sep, 13:20</div></div><span class="note__dot"></span></li>
+        </ul>
+      </section>
+{% endblock %}

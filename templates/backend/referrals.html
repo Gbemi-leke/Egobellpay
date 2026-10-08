@@ -1,0 +1,50 @@
+{% extends "backend/base.html" %}
+{% load static %}
+{# Figures on this page are sample data until the page is connected to its view. #}
+{% block title %}Invite friends{% endblock %}
+{% block heading %}Invite friends{% endblock %}
+{% block sub %}<p class="app-head__sub">Share your code. When a friend joins and makes their first transfer, you both get a reward.</p>{% endblock %}
+
+{% block content %}
+      <div class="app-grid">
+        <div class="app-col">
+          <section class="card-panel card-panel--dark" aria-labelledby="codeTitle">
+            <div class="card-panel__head"><h2 class="card-panel__title" id="codeTitle">Your invite code</h2></div>
+            <div class="copybox mb-3"><span class="copybox__value text-dark">ADAEZE24</span>
+              <button type="button" class="btn btn-soft btn-sm" data-copy="ADAEZE24" data-copied="Code copied"><svg class="icon" aria-hidden="true"><use href="#a-copy"/></svg>Copy</button></div>
+            <div class="copybox mb-3"><span class="copybox__value text-dark">https://egobellpay.ng/join/ADAEZE24</span>
+              <button type="button" class="btn btn-soft btn-sm" data-copy="https://egobellpay.ng/join/ADAEZE24" data-copied="Link copied"><svg class="icon" aria-hidden="true"><use href="#a-copy"/></svg>Copy</button></div>
+            <div class="card-actions">
+              <a class="btn btn-mint" href="https://wa.me/?text=Join%20me%20on%20EgoBellPay%3A%20https%3A%2F%2Fegobellpay.ng%2Fjoin%2FADAEZE24" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#a-chat"/></svg>Share on WhatsApp</a>
+              <button type="button" class="btn btn-line" data-share="Join me on EgoBellPay: https://egobellpay.ng/join/ADAEZE24"><svg class="icon" aria-hidden="true"><use href="#a-share"/></svg>Share another way</button>
+            </div>
+          </section>
+
+          <section class="card-panel" aria-labelledby="invTitle">
+            <div class="card-panel__head"><h2 class="card-panel__title" id="invTitle">People you invited</h2></div>
+            <div class="table-scroll">
+              <table class="activity" role="table">
+                <thead role="rowgroup"><tr role="row"><th role="columnheader" scope="col">Name</th><th role="columnheader" scope="col">Step</th><th role="columnheader" scope="col">Invited</th><th role="columnheader" scope="col">Status</th><th role="columnheader" scope="col" class="activity__num">Reward</th></tr></thead>
+                <tbody role="rowgroup">
+                  <tr role="row"><td role="cell" class="activity__name">Kemi Adebayo</td><td role="cell">First transfer made</td><td role="cell">2 Oct</td><td role="cell"><span class="pill pill--ok">Paid</span></td><td role="cell" class="activity__num mono is-credit">+₦500</td></tr>
+                  <tr role="row"><td role="cell" class="activity__name">Segun Alabi</td><td role="cell">First transfer made</td><td role="cell">24 Sep</td><td role="cell"><span class="pill pill--ok">Paid</span></td><td role="cell" class="activity__num mono is-credit">+₦500</td></tr>
+                  <tr role="row"><td role="cell" class="activity__name">Halima Yusuf</td><td role="cell">Joined, no transfer yet</td><td role="cell">19 Sep</td><td role="cell"><span class="pill pill--wait">Waiting</span></td><td role="cell" class="activity__num mono">₦0</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <div class="app-col">
+          <div class="stat"><div class="stat__label">Rewards earned</div><div class="stat__value">₦1,000</div><div class="stat__note">2 of 3 friends have made a transfer</div></div>
+          <section class="card-panel" aria-labelledby="howTitle">
+            <div class="card-panel__head"><h2 class="card-panel__title card-panel__title--sm" id="howTitle">How it works</h2></div>
+            <ol class="steps">
+              <li><span><strong>Share your code or link</strong>Send it to anyone who does not have EgoBellPay yet.</span></li>
+              <li><span><strong>They open an account</strong>They enter your code when they sign up and verify their identity.</span></li>
+              <li><span><strong>They make a first transfer</strong>₦500 lands in your wallet and ₦500 in theirs, the same day.</span></li>
+            </ol>
+          </section>
+        </div>
+      </div>
+{% endblock %}
